@@ -8,6 +8,10 @@ export default class TodoService {
    const createTodo = await Todo.create(todo)
   return createTodo
  }
+ async findTodoById(todo:any) {
+  const updateTodo = await Todo.findById({_id: todo._id})
+ return updateTodo
+ }
  async update(todo:any) {
   const updateTodo = await Todo.findByIdAndUpdate(todo._id, todo, {new: true})
  return updateTodo
@@ -16,4 +20,6 @@ export default class TodoService {
   const updateTodo = await Todo.findByIdAndDelete(todo._id)
  return updateTodo
  }
+
+ 
 }

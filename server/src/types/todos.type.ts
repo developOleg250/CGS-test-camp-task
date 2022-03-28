@@ -11,7 +11,7 @@ import { Document, Model, model, Schema } from "mongoose";
 export interface ITodo extends Document {
  title: string;
  description: string;
- year: string;
+ year: number;
  completed: boolean;
  public: boolean;
 }
