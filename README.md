@@ -7,13 +7,14 @@
 Watch this video:
 [Hook Setup](https://www.youtube.com/watch?v=jM0Jqfmr9sc&ab_channel=CodeGenerationSoftware)
 
+
 1. Pull repo.
-2. If you are windows user, make sure that `bash` have been installed if not check [Installation link](https://hackernoon.com/how-to-install-bash-on-windows-10-lqb73yj3);
-3. Open Terminal in your project (make sure that you are in main directory with `hooks` folder)
-4. (ONLY FOR WINDOWS USERS) Change first line in `./hooks/commit-msg`, `./hooks/pre-commit` and `./hooks/setup/hooks` from `#!/bin/sh` to `#!/bin/bash`;
-5. Run `cat ./hooks/pre-commit` and change `USER_NAME="user_name"` on third string to `USER_NAME="<YOUR-NAME_LAST_NAME>"` Example: `USER_NAME="vasia_bumper"` and save the file.
-6. `git checkout -b <name that you have set in pre-requirements>/main`
-7. `git push origin <name that you have set in pre-requirements>/main`
+2. `git checkout -b <name that you have set in pre-requirements>/main`
+3. `git push origin <name that you have set in pre-requirements>/main`
+4. If you are windows user, make sure that `bash` have been installed if not check [Installation link](https://hackernoon.com/how-to-install-bash-on-windows-10-lqb73yj3);
+5. Open Terminal in your project (make sure that you are in main directory with `hooks` folder)
+6. (ONLY FOR WINDOWS USERS) Change first line in `./hooks/commit-msg`, `./hooks/pre-commit` and `./hooks/setup/hooks` from `#!/bin/sh` to `#!/bin/bash`;
+7. Run `cat ./hooks/pre-commit` and change `USER_NAME="user_name"` on third string to `USER_NAME="<YOUR-NAME_LAST_NAME>"` Example: `USER_NAME="vasia_bumper"` and save the file.
 8. Run command `./hooks/setup-hooks` (FOR WINDOWS USERS `bash hooks/setup-hooks`);
 9. Run command `cd ./server && yarn && cd ../mobile && yarn`
 
