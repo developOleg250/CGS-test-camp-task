@@ -1,14 +1,22 @@
 import { Response, Request } from "express";
-import { ITodo } from "todos.type";
+import { errorMessage } from "../middleware/validate";
+import { IdTodo, ITodo } from "todos.type";
 import TodoService from "../services/todo.service";
 
 export class TodoController {
  constructor(private todoService: TodoService) {}
 
  async getAllTodo(_: Request, res: Response) {
-  const getTodos = await this.todoService.findAll();
-  res.send(getTodos);
+  try{
+   const getTodos = await this.todoService.findAll();
+   return res.send(getTodos);
+  }
+  catch(e){
+   return res.status(500).json(e)
+  }
  }
+
+ 
 
  async createOneTodo(req: Request, res: Response) {
   try{
@@ -18,13 +26,15 @@ export class TodoController {
    return res.json(createTodo)
   }
   catch(e){
+   
    return res.status(500).json(e)
+   
   }
  }
 
  async getTodoById(req: Request, res: Response) {
   try{
-   const todo: ITodo = req.body;
+   const todo: IdTodo = req.body;
    const getTodo = await this.todoService.findTodoById(todo)
    return res.json(getTodo)
   }
@@ -46,7 +56,7 @@ export class TodoController {
 
  async deleteTodoById(req: Request, res: Response) {
   try{
-   const todo: ITodo = req.body;
+   const todo: IdTodo = req.body;
    const deleteTodo = await this.todoService.delete(todo)
    return res.json("Todo was deleted")
   }
