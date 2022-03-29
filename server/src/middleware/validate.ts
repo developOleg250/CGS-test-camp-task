@@ -44,9 +44,9 @@ export const bodyValidation = () => async (req: Request, res: Response, next: Ne
 		next();
 	}
 };
-
+ 
 //Middleware for try/catch
-export const  tryCatchMiddleware = async (req: Request, res: Response, fn:any) => {
+export const  tryCatchMiddleware = async (req: Request, res: Response, fn:Function) => {
  try{
   const todo = await fn();
   return todo;  

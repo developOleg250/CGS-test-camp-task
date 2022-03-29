@@ -29,7 +29,7 @@ export class TodoController {
  }
 
  async getTodoById(req: Request, res: Response) {
-  tryCatchMiddleware(req, res, async () =>{
+  tryCatchMiddleware(req, res, async () => {
    const todo: IdTodo = req.body;
    const getTodo = await this.todoService.findTodoById(todo)
    return res.json(getTodo);
@@ -41,7 +41,7 @@ export class TodoController {
   tryCatchMiddleware(req, res, async () =>{
    const todo: ITodo = req.body;
    const updateTodo  = await this.todoService.update(todo)
-   return res.json(updateTodo)
+   return res.json(updateTodo) 
    
   } )
   
