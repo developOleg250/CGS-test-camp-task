@@ -14,4 +14,3 @@ todosRouter.put("", isExistId(),isExistInBase(),bodyValidation(), todoController
 todosRouter.delete("",isExistId(),isExistInBase(), todoController.deleteTodoById.bind(todoController));
 
 export default todosRouter;
-// bodyValidation(),

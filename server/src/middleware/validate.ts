@@ -15,15 +15,14 @@ export const isExistId = () => async (req: TypedRequestBody<{_id: string}>, res:
 };
 
 //validation id in base
-export const isExistInBase = () => async (req: TypedRequestBody<{_id: string}>, res: Response, next: NextFunction) => {
- const { _id }  = req.body;
- try{
+export const isExistInBase = () => async (req: Request, res: Response, next: NextFunction) => {
+
+ tryCatchMiddleware(req, res, async () =>{
+  const { _id }  = req.body;
   const findId = await Todo.findById({ _id: _id });
   return next(); 
- }
- catch{
-  return res.status(400).json({ message: "Todo with this ID not exist" });
- }
+  
+ })
  
 };
 
@@ -46,12 +45,15 @@ export const bodyValidation = () => async (req: Request, res: Response, next: Ne
 	}
 };
 
+//Middleware for try/catch
+export const  tryCatchMiddleware = async (req: Request, res: Response, fn:any) => {
+ try{
+  const todo = await fn();
+  return todo;  
+ }
+ catch(e:any){
+  e.message ="Error";
+  return res.status(500).json({e: e.message })  
+ }
 
-
-
-//try/catch/fix 
-export const errorMessage = (message:string | undefined) => async ( req: Request, res: Response, next: NextFunction) => {
- 
- 
- return res.status(500).json(message)
-}
+ }

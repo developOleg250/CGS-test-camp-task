@@ -13,9 +13,9 @@ const connectDB = async () => {
   await connect(mongoURI, options);
   // tslint:disable-next-line:no-console
   console.log("MongoDB Connected...");
- } catch (err) {
+ } catch (err:any) {
   // tslint:disable-next-line:no-console
-  // console.error(err.message);
+  console.error(err.message);
   // Exit process with failure
   process.exit(1);
  }
