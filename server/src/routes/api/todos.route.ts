@@ -1,16 +1,15 @@
 import { Router } from "express";
-import { isExistInBase, bodyValidation } from "../../middleware/validate";
-import { isExistId } from "../../middleware/validate";
-
+import { isExistInBase, bodyValidation, tryCatchMiddleware } from "../../middleware/validate";
 import todoController from "../../controllers/todo.controller";
+import { todoSchema } from "../../types/todos.type";
 
 const todosRouter: Router = Router();
+ 
 
-
-todosRouter.get("", todoController.getAllTodo.bind(todoController));
-todosRouter.get("/id",isExistId(),isExistInBase(), todoController.getTodoById.bind(todoController));
-todosRouter.post("", todoController.createOneTodo.bind(todoController));
-todosRouter.put("", isExistId(),isExistInBase(),bodyValidation(), todoController.updateTodoById.bind(todoController));
-todosRouter.delete("",isExistId(),isExistInBase(), todoController.deleteTodoById.bind(todoController));
+todosRouter.get("", tryCatchMiddleware(todoController.getAllTodo.bind(todoController)));
+todosRouter.get("/:id",isExistInBase(), tryCatchMiddleware(todoController.getTodoById.bind(todoController)));
+todosRouter.post("", bodyValidation(todoSchema), tryCatchMiddleware(todoController.createOneTodo.bind(todoController)));
+todosRouter.put("/:id",isExistInBase(), bodyValidation(todoSchema), tryCatchMiddleware(todoController.updateTodoById.bind(todoController)));
+todosRouter.delete("/:id",isExistInBase(), tryCatchMiddleware(todoController.deleteTodoById.bind(todoController)));
 
 export default todosRouter;

@@ -23,7 +23,7 @@ export interface IdTodo extends Document {
 }
 
 
-export const validation = joi.object({
+export const todoSchema= joi.object({
  title: joi.string().min(3).max(25).trim(true).required(),
  description: joi.string().min(3).max(250).trim(true).required(),
  year: joi.number().integer().min(1920).max(3000).required(),

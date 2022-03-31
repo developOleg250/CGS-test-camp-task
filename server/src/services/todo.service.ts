@@ -11,16 +11,16 @@ export default class TodoService {
    const createTodo = await Todo.create(todo)
   return createTodo
  }
- async findTodoById(todo:IdTodo) {
-  const updateTodo = await Todo.findById({_id: todo._id})
+ async findTodoById(id:string) {
+  const updateTodo = await Todo.findById({_id: id})
  return updateTodo
  }
- async update(todo:ITodo) {
-  const updateTodo = await Todo.findByIdAndUpdate(todo._id, todo, {new: true})
+ async update(todo:ITodo, id:string) {
+  const updateTodo = await Todo.findByIdAndUpdate({_id: id}, todo, {new: true})
  return updateTodo
  }
- async delete(todo:IdTodo) {
-  const updateTodo = await Todo.findByIdAndDelete(todo._id)
+ async delete(id:string) {
+  const updateTodo = await Todo.findByIdAndDelete({_id: id})
  return updateTodo
  }
 
