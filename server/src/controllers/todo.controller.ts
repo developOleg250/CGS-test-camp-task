@@ -6,34 +6,29 @@ export class TodoController {
  constructor(private todoService: TodoService) {}
 
  async getAllTodo(req: Request, res: Response){
-    const getTodos = await this.todoService.findAll();
-    return res.json(getTodos);
+    return  await this.todoService.findAll();
   }
 
  async createOneTodo(req: Request, res: Response) {
     const todo: ITodo = req.body; 
-    const createTodo = await this.todoService.create(todo)
-    return res.json(createTodo);
+    return await this.todoService.create(todo)
   }
 
  async getTodoById(req: Request, res: Response) {
     const { id } = req.params;
     
-    const getTodo = await this.todoService.findTodoById(id)
-    return res.json(getTodo);
+    return await this.todoService.findTodoById(id)
   }
 
  async updateTodoById(req: Request, res: Response) {
     const todo: ITodo = req.body;
     const { id } = req.params;
-    const updateTodo  = await this.todoService.update(todo, id)
-    return res.json(updateTodo) 
+    return await this.todoService.update(todo, id)
   }
 
  async deleteTodoById(req: Request, res: Response) {
     const { id } = req.params;
-    const deleteTodo = await this.todoService.delete(id)
-    return res.json("Todo was deleted")
+    return await this.todoService.delete(id)
   }
 }
 

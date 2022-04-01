@@ -35,7 +35,7 @@ export const  tryCatchMiddleware = (fn:Function) =>
  async (req: Request, res: Response) => {
  try{
   const todo = await fn(req,res);
-  return todo;
+  return res.json(todo)
  }
  catch(e:any){
   e.message ="Error";
