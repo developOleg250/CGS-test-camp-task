@@ -1,12 +1,20 @@
 import bodyParser from "body-parser";
-import express from "express";
+import express, { NextFunction } from "express";
 
 import connectDB from "../config/database";
 import { graphqlHTTP } from "express-graphql";
-import { buildSchema } from "graphql";
+import { buildSchema, NoUnusedVariablesRule } from "graphql";
 import AppRouter from "./routes";
 import axios from "axios";
 import cors from "cors"
+
+import passport from 'passport';
+
+import passportJWT from "passport-jwt";
+import { loginStrategy, signupStrategy } from "./middleware/auth.middleware";
+
+const ExtractJwt = passportJWT.ExtractJwt;
+const JwtStrategy = passportJWT.Strategy;
 
 const app = express();
 const router = new AppRouter(app);
@@ -21,7 +29,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //for by CORS policy
 app.use(cors());
 
+passport.use('signup', signupStrategy);
+passport.use('login', loginStrategy);
+
+app.use(passport.initialize());
+
 router.init();
+
 
 
 // // TODO: Move that to model GraphQL

@@ -3,12 +3,14 @@ import { ITodo,IdTodo } from "todos.type";
 
 
 export default class TodoService {
- async findAll() {
-  const findTodo = await Todo.find()
+ async findAll(userId:string) {
+   console.log('userId='+userId);
+  const findTodo = await Todo.find( {$or : [{userId}, {public: true}]})
    return findTodo
  }
- async create(todo:ITodo) {
-   const createTodo = await Todo.create(todo)
+ async create(todo:ITodo, userId:string) {
+  console.log(userId);
+   const createTodo = await Todo.create({...todo,userId } )
   return createTodo
  }
  async findTodoById(id:string) {

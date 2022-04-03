@@ -29,5 +29,5 @@ export const todoSchema= joi.object({
  year: joi.number().integer().min(1920).max(3000).required(),
  completed: joi.boolean().default(false),
  public: joi.boolean().default(false),
- 
+ userId:joi.string(),
 });
