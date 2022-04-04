@@ -1,31 +1,34 @@
 import React from 'react';
 import { View, StyleSheet, Text, ViewStyle } from 'react-native';
 import Textarea from 'react-native-textarea';
+import { THEME } from '../styles/theme';
 
 interface ITextArea{
-  [x: string]: any;
+  [x: string]: string | undefined | (() => void) | boolean;
   text: string;
-  error: string;
-  touched: any;
+  error: string | undefined;
+  touched: boolean | undefined;
   placeholder: string;
   defaultValue: string;
-  onChange: any;
-  onBlur: any;
+  onChange: () => void;
+  onBlur: () => void;
 }
 
 const TextArea2: React.FC<ITextArea> =({
   text, error, touched,
   placeholder, defaultValue, onChange, onBlur, ...otherProps }) => {
-  const validationColor = !touched ? '#223e4b' : error ? '#FF5A5F' : '#223e4b';
+  const validationColor =
+    !touched ? THEME.Colors.gray1 :
+    error ? THEME.Colors.red1 : THEME.Colors.gray1;
   return (
     <View
       style={[{
         flexDirection: 'row',
         alignItems: 'top',
-        borderRadius: 8,
+        borderRadius: THEME.Size.size5,
         borderColor: validationColor,
         borderWidth: 1,
-        padding: 8,
+        padding: THEME.Spacings.sp10,
       }] as ViewStyle}
     >
       <View style={{ flex: 1 }}>
@@ -33,14 +36,14 @@ const TextArea2: React.FC<ITextArea> =({
         <Textarea
           containerStyle={styles.textareaContainer}
           style={styles.textarea}
-          onChangeText={onChange}
+          onChangeText={onChange()}
           value={defaultValue}
-          maxLength={120}
+          maxLength={THEME.Size.size100}
           placeholder={placeholder}
-          placeholderTextColor={'#55f'}
+          placeholderTextColor={THEME.Colors.gray1}
           underlineColorAndroid={'transparent'}
           touched={touched}
-          onBlur={onBlur}
+          onBlur={onBlur()}
           error={error}
           {...otherProps }
         />
@@ -53,17 +56,16 @@ export default TextArea2;
 
 const styles = StyleSheet.create({
   label: {
-    margin: 8,
+    margin: THEME.Spacings.sp10,
   },
   textareaContainer: {
-    height: 180,
-    padding: 5,
-    backgroundColor: '#eef',
+    height: THEME.Size.size150,
+    padding: THEME.Spacings.sp10,
+    backgroundColor: THEME.Colors.grayLightArea,
   },
   textarea: {
     textAlignVertical: 'top',
-    height: 170,
-    fontSize: 14,
-    color: '#333',
+    height: THEME.Size.size150,
+    fontSize: THEME.Size.size15,
   },
 });

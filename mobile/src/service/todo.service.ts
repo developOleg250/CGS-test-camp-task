@@ -13,10 +13,12 @@ class TodoService extends HttpService {
         apiVersion);
   }
   async getTodos() {
-    return await this.get('');
+    const { data } = await this.get('');
+    return data;
   }
   async getTodosById(id:string) {
-    return await this.get(id);
+    const { data } = await this.get(id);
+    return data;
   }
   async updateTodo(id:string, data:ITodo) {
     return await this.put(id, data);
