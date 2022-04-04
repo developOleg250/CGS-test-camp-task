@@ -1,6 +1,7 @@
 import React from 'react';
 import { View,
   StyleSheet, Text, CheckBox as RNCheckBox } from 'react-native';
+import { THEME } from '../styles/theme';
 
 interface ICheckBox {
   text: string;
@@ -9,17 +10,14 @@ interface ICheckBox {
 }
 
 const CheckBox2: React.FC<ICheckBox> = ({ text, value, handleChange}) => {
-  const validationColor ='#223e4b';
   return (
     <View
       style={{
         flexDirection: 'row',
-        // alignItems: 'center',
-        height: 48,
-        borderRadius: 0,
-        borderColor: validationColor,
+        height: THEME.Size.size50,
+        borderRadius: THEME.Size.size0,
         borderBottomWidth: StyleSheet.hairlineWidth,
-        padding: 8,
+        padding: THEME.Spacings.sp10,
       }}
     >
 
@@ -44,7 +42,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   label: {
-    margin: 8,
+    margin: THEME.Spacings.sp3,
   },
 });
 

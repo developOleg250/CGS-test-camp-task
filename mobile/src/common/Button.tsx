@@ -1,5 +1,6 @@
 import { TouchableOpacity, Text } from 'react-native';
 import React from 'react';
+import { THEME } from '../styles/theme';
 
 type IButton = {
     label: string;
@@ -9,18 +10,22 @@ const Button : React.FC<IButton> = ({ label, onPress }) => {
   return (
     <TouchableOpacity
       style={{
-        borderRadius: 8,
-        height: 50,
-        width: 245,
+        borderRadius: THEME.Size.size5,
+        height: THEME.Size.size50,
+        width: THEME.Size.size245,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#33f',
+        backgroundColor: THEME.Colors.blue90,
       }}
       activeOpacity={0.7}
       onPress={onPress}
     >
       <Text
-        style={{ fontSize: 18, color: 'white', textTransform: 'uppercase' }}
+        style={{
+          fontSize: THEME.Size.size20,
+          color: THEME.Colors.white,
+          textTransform: 'uppercase',
+        }}
       >
         {label}
       </Text>

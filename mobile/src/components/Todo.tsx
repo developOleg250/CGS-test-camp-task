@@ -1,14 +1,15 @@
 // import CheckBox from '@react-native-community/checkbox';
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { handlerDeleteTodoApi } from '../api/api';
+import { todoService } from '../api/api';
 import Link from '../common/Link';
+import { THEME } from '../styles/theme';
 
 interface ITodoi{
   _id: string;
   title: string;
   description: string;
-  handleState: ()=>void;
+  handleUpdate: ()=>void;
   year: string;
   completed: string;
   publics: string;
@@ -19,12 +20,12 @@ const Todo:React.FC<ITodoi> = ({
     <View style={styles.container}>
       <View style={{ flex: 1,
         flexDirection: 'row',
-        paddingBottom: 5,
-        paddingTop: 5,
+        paddingBottom: THEME.Spacings.sp5,
+        paddingTop: THEME.Spacings.sp5,
       }}>
         {/* left */}
         <View
-          style={{ flex: 5, flexDirection: 'column' }}>
+          style={{ flex: THEME.Size.size5, flexDirection: 'column' }}>
           <View style={{ flex: 1 }}>
             {/* title */}
             <View style={{ flex: 1,
@@ -41,8 +42,8 @@ const Todo:React.FC<ITodoi> = ({
             <View style={{
               flex: 3,
               justifyContent: 'center',
-              paddingLeft: 10,
-              backgroundColor: '#D7FF75',
+              paddingLeft: THEME.Spacings.sp10,
+              backgroundColor: THEME.Colors.green1,
             }}>
               <Text>{description}</Text>
             </View>
@@ -66,7 +67,8 @@ const Todo:React.FC<ITodoi> = ({
         <View
           style={{
             flex: 1,
-            paddingTop: 28, alignItems: 'center',
+            paddingTop: THEME.Spacings.sp28,
+            alignItems: 'center',
           }}>
           <Link
             text = 'Edit'
@@ -79,17 +81,16 @@ const Todo:React.FC<ITodoi> = ({
         {/* Delete */}
         <View style={{
           flex: 1,
-          paddingTop: 27,
+          paddingTop: THEME.Spacings.sp28,
           alignItems: 'center',
         }}>
           <Button
-            onPress={() => {
-              handlerDeleteTodoApi(_id);
-              setTimeout(() => handleUpdate(), 100);
+            onPress={async () => {
+              await todoService.deleteTodo(_id);
+              handleUpdate();
             }}
-            title="Del"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
+            title='Del'
+            color={THEME.Colors.pink1}
           />
         </View>
       </View>
@@ -99,38 +100,38 @@ const Todo:React.FC<ITodoi> = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: 150,
+    height: THEME.Size.size150,
     width: '100%',
-    backgroundColor: '#FFD775',
-    borderRadius: 5,
-    marginBottom: 20,
+    backgroundColor: THEME.Colors.orange1,
+    borderRadius: THEME.Spacings.sp5,
+    marginBottom: THEME.Spacings.sp20,
   },
   title: {
-    fontSize: 32,
+    fontSize: THEME.Size.size30,
   },
   checkboxContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: THEME.Size.size20,
   },
   checkbox: {
     alignSelf: 'center',
   },
   label: {
-    margin: 8,
+    margin: THEME.Size.size5,
   },
   link: {
-    height: 31,
-    width: 42,
+    height: THEME.Size.size30,
+    width: THEME.Size.size40,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#33f',
-    color: 'white',
-    paddingLeft: 3,
+    backgroundColor: THEME.Colors.blue90,
+    color: THEME.Colors.white,
+    paddingLeft: THEME.Spacings.sp3,
   },
   view: {
     flex: 1,
     justifyContent: 'center',
-    paddingLeft: 10,
+    paddingLeft: THEME.Spacings.sp10,
 
   },
 });

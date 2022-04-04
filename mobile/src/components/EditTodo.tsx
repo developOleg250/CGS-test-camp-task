@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import React from 'react';
 import TextInput from '../common/TextInput';
 import Button from '../common/Button';
@@ -7,9 +7,10 @@ import * as Yup from 'yup';
 import CheckBox from '../common/CheckBox';
 import TextArea from '../common/TextArea';
 import { useNavigate, useParams } from 'react-router-dom';
-import useGetTodoById from '../hook/useGetTodoById';
-import useUpdateTodoById from '../hook/useUpdateTodoById';
 import Link from '../common/Link';
+import { todoService } from '../api/api';
+import { useQuery } from 'react-query';
+import { styles } from '../styles/form.styles';
 
 const LoginSchema = Yup.object().shape({
   title: Yup.string().min(3).max(20).required('Required'),
@@ -25,7 +26,8 @@ const LoginSchema = Yup.object().shape({
 const CreateTodo = () => {
   const { id } = useParams();
 
-  const { isLoading, data }= useGetTodoById(id+'');
+  const { isLoading, data }=
+  useQuery(['posts', id], () => todoService.getTodosById(id+''));
   const getData = () => data || tempData;
   const tempData = { check: false, title: '', year: '',
     description: '', completed: '', public: false };
@@ -44,7 +46,7 @@ const CreateTodo = () => {
     validationSchema: LoginSchema,
     initialValues: getData(),
     enableReinitialize: true,
-    onSubmit: values => {
+    onSubmit: async (values) => {
       // console.log(values);
       const data = {
         'completed': values.completed,
@@ -53,20 +55,14 @@ const CreateTodo = () => {
         'description': values.description,
         'year': values.year,
       };
-      useUpdateTodoById(values._id, data);
+      await todoService.updateTodo(values._id, data);
       navigate('/');
     },
   });
 
   return !isLoading && (
     <View
-      style={{
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 20,
-      }}
+      style={styles.title}
     >
       <Link
         text = 'Home'
@@ -76,60 +72,58 @@ const CreateTodo = () => {
       >
       </Link>
 
-      <Text style={{ color: '#223e4b', fontSize: 20, marginBottom: 16 }}>
+      <Text style={styles.edit}>
         Edit Todo
       </Text>
-      <View style={{ paddingHorizontal: 32, marginBottom: 16, width: '100%' }}>
+      <View style={styles.text}>
         <TextInput
           text='Title'
           placeholder='Enter your title'
-          onChange={handleChange('title')}
-          onBlur={handleBlur('title')}
+          onChange={ () => handleChange('title')}
+          onBlur={ () => handleBlur('title')}
           error={errors.title}
           touched={touched.title}
           value={values.title}
         />
       </View>
-      <View style={{ paddingHorizontal: 32, marginBottom: 16, width: '100%' }}>
+      <View style={styles.text}>
         <TextArea
           text='Description'
           defaultValue={values.description}
           placeholder='Enter your description'
-          onChange={ handleChange('description') }
-          onBlur={handleBlur('description')}
+          onChange={ () => handleChange('description') }
+          onBlur={() => handleBlur('description')}
           error={errors.description}
           touched={touched.description}
         />
       </View>
-      <View style={{ paddingHorizontal: 32, marginBottom: 16, width: '100%' }}>
+      <View style={styles.text}>
         <TextInput
           text='Year'
           placeholder='Enter your year'
-          onChange={handleChange('year')}
-          onBlur={handleBlur('year')}
+          onChange={() => handleChange('year')}
+          onBlur={() => handleBlur('year')}
           error={errors.year}
           touched={touched.year}
           value={values.year}
         />
       </View>
-      <View style={{ paddingHorizontal: 32, marginBottom: 16, width: '100%' }}>
+      <View style={styles.text}>
         <CheckBox
           text='Completed'
           value={values.completed}
           handleChange={() => {
             setFieldValue('completed', !values.completed);
-            // console.log(values);
           }
           }
         />
       </View>
-      <View style={{ paddingHorizontal: 32, marginBottom: 16, width: '100%' }}>
+      <View style={styles.text}>
         <CheckBox
           text='Public'
           value={values.public}
           handleChange={() => {
             setFieldValue('public', !values.public);
-            console.log(values);
           }
           }
         />
@@ -141,14 +135,3 @@ const CreateTodo = () => {
 
 export default CreateTodo;
 
-const styles = StyleSheet.create({
-  link: {
-    height: 30,
-    width: 350,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#33f',
-    color: 'white',
-    marginBottom: 30,
-  },
-});

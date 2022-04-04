@@ -1,40 +1,42 @@
 import React from 'react';
 import { TextInput as RNTextInput, View, StyleSheet, Text } from 'react-native';
+import { THEME } from '../styles/theme';
 
 interface ITextInput {
-  [x: string]: string;
+  [x: string]: string | undefined | (() => void) | boolean;
   text: string;
-  error: string | '';
-  touched: any;
-  onBlur: any;
-  onChange: any;
+  error: string | undefined;
+  touched: boolean | undefined;
+  onBlur: () => void;
+  onChange: () => void;
 }
 
 const TextInput: React.FC<ITextInput> = ({ text, error, touched,
   onBlur, onChange, ...otherProps }) => {
-  const validationColor = !touched ? '#223e4b' : error ? '#FF5A5F' : '#223e4b';
+  const validationColor =
+   !touched ? THEME.Colors.gray1 :
+   error ? THEME.Colors.red1 : THEME.Colors.gray1;
   return (
     <View
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        height: 48,
-        borderRadius: 8,
+        height: THEME.Size.size50,
+        borderRadius: THEME.Size.size5,
         borderColor: validationColor,
         borderWidth: StyleSheet.hairlineWidth,
-        padding: 8,
+        padding: THEME.Spacings.sp5,
       }}
     >
       <Text style={styles.label}>{text}</Text>
       <View style={{ flex: 1 }}>
         <RNTextInput
           underlineColorAndroid='transparent'
-          placeholderTextColor='rgba(34, 62, 75, 0.7)'
+          placeholderTextColor={THEME.Colors.gray1}
           {...otherProps}
-          onBlur={onBlur}
+          onBlur={onBlur()}
           style={styles.input}
-          // error={error}
-          onChange={onChange}
+          onChange={onChange()}
         />
       </View>
     </View>
@@ -45,13 +47,13 @@ export default TextInput;
 
 const styles = StyleSheet.create({
   input: {
-    height: 30,
-    margin: 5,
+    height: THEME.Size.size30,
+    margin: THEME.Size.size5,
     borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
+    borderColor: THEME.Colors.grayLight,
+    padding: THEME.Spacings.sp10,
   },
   label: {
-    margin: 8,
+    margin: THEME.Spacings.sp10,
   },
 });

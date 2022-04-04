@@ -1,10 +1,10 @@
 export const QUERY_KEYS = {
-  TODO: ['todos'] as const,
+  TODO: ['todos'],
 };
 export const ROUTER_KEYS = {
-  HOME: '/' as const,
-  CREATE_TODO: '/createTodo' as const,
-  EDIT_TODO: '/editTodo/:id' as const,
+  HOME: '/',
+  CREATE_TODO: '/createTodo',
+  EDIT_TODO: '/editTodo/:id',
 };
 
 export const SERVER_URL = 'http://localhost:5000';
