@@ -21,10 +21,10 @@ class TodoService extends HttpService {
     return data;
   }
   async updateTodo(id:string, data:ITodo) {
-    return await this.put(id, data);
+    return await this.put<ITodo>(id, data);
   }
   async addTodo(data:ITodo) {
-    return await this.post(data);
+    return await this.post<ITodo>(data);
   }
   async deleteTodo(id:string) {
     return await this.delete(id);

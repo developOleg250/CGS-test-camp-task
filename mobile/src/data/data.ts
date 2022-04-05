@@ -7,6 +7,7 @@ export const ROUTER_KEYS = {
   EDIT_TODO: '/editTodo/:id',
   LOGIN: '/login',
   REGISTER: '/register',
+  TODO_LIST: '/todoList',
 };
 
 export const SERVER_URL = 'http://localhost:5000';

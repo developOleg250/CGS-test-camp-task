@@ -11,6 +11,7 @@ import Link from '../common/Link';
 import { todoService } from '../api/api';
 import { useQuery } from 'react-query';
 import { styles } from '../styles/form.styles';
+import { ROUTER_KEYS } from '../data/data';
 
 const LoginSchema = Yup.object().shape({
   title: Yup.string().min(3).max(20).required('Required'),
@@ -56,7 +57,7 @@ const CreateTodo = () => {
         'year': values.year,
       };
       await todoService.updateTodo(values._id, data);
-      navigate('/');
+      navigate(ROUTER_KEYS.TODO_LIST);
     },
   });
 

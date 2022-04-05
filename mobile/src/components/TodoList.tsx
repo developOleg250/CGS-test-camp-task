@@ -7,16 +7,17 @@ import { todoService } from '../api/api';
 import { useQuery, UseQueryResult } from 'react-query';
 import { THEME } from '../styles/theme';
 
+interface TodoSet {
+  completed: string,
+  description: string,
+  public: string,
+  title: string,
+  userId: string,
+  year: string,
+  _id: string,
+}
+
 const TodoList = ( ) => {
-  interface TodoSet {
-    completed: string,
-    description: string,
-    public: string,
-    title: string,
-    userId: string,
-    year: string,
-    _id: string,
-  }
   const { data, isLoading, isSuccess, refetch }:UseQueryResult<TodoSet, Error> =
       useQuery<TodoSet, Error>(QUERY_KEYS.TODO, () => todoService.getTodos());
   if (isLoading) return <Text>is loading</Text>;
@@ -31,6 +32,7 @@ const TodoList = ( ) => {
       completed={item.completed}
       publics={item.public}
       handleUpdate={refetch}
+      userId={item.userId}
     />;
 
   return (
@@ -39,11 +41,21 @@ const TodoList = ( ) => {
         paddingTop: THEME.Spacings.sp20,
         justifyContent: 'center',
         alignItems: 'center' }}>
+        <View style={{ paddingBottom: THEME.Spacings.sp30}}>
+          <Link
+            text = 'Back'
+            path = {''}
+            params={''}
+            style={styles.link}
+          >
+          </Link>
+        </View>
         <Link
           text='Create Todo'
           path = {'/createTodo'}
           params={''} style={styles.link}>
         </Link>
+        <Text>{localStorage.getItem('userId')}</Text>
       </View>
       <FlatList
         data={data}

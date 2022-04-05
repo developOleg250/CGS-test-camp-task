@@ -10,6 +10,7 @@ import Link from '../common/Link';
 import { useNavigate } from 'react-router-dom';
 import { todoService } from '../api/api';
 import { styles } from '../styles/form.styles';
+import { ROUTER_KEYS } from '../data/data';
 
 const LoginSchema = Yup.object().shape({
   title: Yup.string().min(3).max(20).required('Required'),
@@ -35,8 +36,8 @@ export default function CreateTodo() {
     touched,
   } = useFormik({
     validationSchema: LoginSchema,
-    initialValues: { check: false, title: '',
-      year: '', description: '', completed: false, public: false },
+    initialValues: { check: false, title: 'test',
+      year: '2020', description: 'text', completed: false, public: false },
     onSubmit: async (values) => {
       const data = {
         'completed': values.completed,
@@ -46,7 +47,7 @@ export default function CreateTodo() {
         'year': values.year,
       };
       await todoService.addTodo(data);
-      navigate('/');
+      navigate(ROUTER_KEYS.TODO_LIST);
     },
   });
 

@@ -1,11 +1,10 @@
 // import CheckBox from '@react-native-community/checkbox';
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import { todoService } from '../api/api';
-import Link from '../common/Link';
+import { StyleSheet, Text, View } from 'react-native';
 import { THEME } from '../styles/theme';
+import Panel from './Panel';
 
-interface ITodoi{
+interface ITodo{
   _id: string;
   title: string;
   description: string;
@@ -13,9 +12,11 @@ interface ITodoi{
   year: string;
   completed: string;
   publics: string;
+  userId: string;
 }
-const Todo:React.FC<ITodoi> = ({
-  _id, title, description, year, completed, publics, handleUpdate } ) => {
+const Todo:React.FC<ITodo> = ({
+  _id, title, description, year, completed,
+  publics, handleUpdate, userId } ) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 1,
@@ -45,7 +46,7 @@ const Todo:React.FC<ITodoi> = ({
               paddingLeft: THEME.Spacings.sp10,
               backgroundColor: THEME.Colors.green1,
             }}>
-              <Text>{description}</Text>
+              <Text>{description} = {userId}</Text>
             </View>
             {/* checkboxes */}
             <View style={{ flex: 1,
@@ -63,36 +64,9 @@ const Todo:React.FC<ITodoi> = ({
             </View>
           </View>
         </View>
-        {/* Edit  */}
-        <View
-          style={{
-            flex: 1,
-            paddingTop: THEME.Spacings.sp28,
-            alignItems: 'center',
-          }}>
-          <Link
-            text = 'Edit'
-            path = {'/editTodo'}
-            params={_id}
-            style={styles.link}
-          >
-          </Link>
-        </View>
-        {/* Delete */}
-        <View style={{
-          flex: 1,
-          paddingTop: THEME.Spacings.sp28,
-          alignItems: 'center',
-        }}>
-          <Button
-            onPress={async () => {
-              await todoService.deleteTodo(_id);
-              handleUpdate();
-            }}
-            title='Del'
-            color={THEME.Colors.pink1}
-          />
-        </View>
+        {/* Edit  */}{/* Delete */}
+        {(localStorage.getItem('userId') == userId) ?
+         <Panel _id={_id} handleUpdate={handleUpdate}></Panel> : null}
       </View>
     </View>
   );

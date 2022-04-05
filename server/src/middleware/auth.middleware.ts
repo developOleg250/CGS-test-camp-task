@@ -8,7 +8,7 @@ import { hashPassword, UPDATE } from "./hash";
 import { Request, Response, NextFunction } from "express";
 
 export const generateAccessToken = (id:string) =>{
-  return jwt.sign({ id }, SECRET, {expiresIn: '12h'})
+  return jwt.sign({ id }, SECRET, {expiresIn: '24h'})
 }
 
 const JwtStrategy = passportJWT.Strategy;
@@ -21,9 +21,9 @@ export const loginStrategy = new LocalStrategy.Strategy(
     try {
       //find user exist in base=>true
       const user = await User.findOne({ email });
-      console.log(user);
+      // console.log(user);
       const hashPasswordText= hashPassword(password, UPDATE );
-      console.log(hashPasswordText);
+      // console.log(hashPasswordText);
       
       if (user) {
         if (email === user.email && hashPasswordText === user.password  )  {
@@ -56,7 +56,8 @@ export const passportLoginAuthenticate = (req, res, next) => {
 
     //if user exist and email password are good => token
     if (user) {
-      const token = generateAccessToken(req._id);
+      // console.log('loginStrategy='+user._id );
+      const token = generateAccessToken(user._id);
       return res.send({token, user});
     }
   })(req, res, next);
@@ -70,7 +71,7 @@ export const signupStrategy = new LocalStrategy.Strategy(
     try {
       //find user exist in base
       const user = await User.findOne({ email });
-      console.log(user);
+      // console.log(user);
       if (!user) {
         return done(null, true); //redirect to create user
       }
@@ -100,6 +101,7 @@ export const passportSignUpAuthenticate =(req, res, next) => {
       try {
         const userCreate = await User.create(req.body);
         const token = generateAccessToken(userCreate._id)
+        // console.log('signUPStrategy='+userCreate._id );
         return res.send({token, user: userCreate });
       } catch (error) {
         return res.send( { message: 'errror base' })
@@ -112,19 +114,22 @@ export const passportSignUpAuthenticate =(req, res, next) => {
 
 export const isValidToken = () => 
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log('1111');
+    // console.log('1111');
     
   try{
-    console.log(req.headers); 
+    // console.log(req.headers); 
+
   const token  = req.headers?.authorization?.split(' ')[1];
-  console.log('token'+token);
+  // console.log('token'+token);
   if (!token) {
     return res.status(403).json({message: 'token not  found'})
   }
   const decodedData = jwt.verify(token, SECRET);
-  console.log(decodedData);
+  // console.log(decodedData);
   
   req.user = decodedData;
+  // console.log(decodedData);
+  
   // return res.status(200).json({decode: decodedData }) 
   return next();
   }

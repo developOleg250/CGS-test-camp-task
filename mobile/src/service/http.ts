@@ -2,7 +2,6 @@
 // It could be any fetching services, such as default fetch, call api, xhr, etc.
 
 import axios from 'axios';
-import { ITodo } from '../type/type.todo';
 
 class HttpService {
   baseUrl: string;
@@ -21,39 +20,32 @@ class HttpService {
     return `${this.baseUrl}/${this.apiVersion}/${id}`;
   }
 
+  get(id: string) {
+    return this.fetchingService.get(this.getFullApiUrl(id),
+    this.populateTokenToHeaderConfig());
+  }
+
+  put<T>(id: string, data:T): Promise<any> {
+    return this.fetchingService.put(
+        this.getFullApiUrl(id), data, this.populateTokenToHeaderConfig());
+  }
+
+  post<T>(data:T, url:string = ''): Promise<any> {
+    return this.fetchingService.post(
+        this.getFullApiUrl(url), data, this.populateTokenToHeaderConfig());
+  }
+
   private populateTokenToHeaderConfig() {
-    return {
+    const headers = {
+      'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('token'),
     };
-  };
-
-  get(id: string) {
-    return this.fetchingService.get(this.getFullApiUrl(id));
+    return { headers };
   }
-
-  put(id: string, data:ITodo) {
-    return this.fetchingService.put(
-        this.getFullApiUrl(id), data);
-  }
-
-  post(data:ITodo) {
-    return this.fetchingService.post(
-        this.getFullApiUrl(''), data);
-  }
-
-  private headersConfig(data:any):any {
-    return {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: data,
-    };
-  };
 
   delete(id: string) {
     return this.fetchingService.delete(
-        this.getFullApiUrl(id));
+        this.getFullApiUrl(id), this.populateTokenToHeaderConfig());
   }
 }
 
