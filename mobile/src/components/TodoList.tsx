@@ -7,16 +7,17 @@ import { todoService } from '../api/api';
 import { useQuery, UseQueryResult } from 'react-query';
 import { THEME } from '../styles/theme';
 
+interface TodoSet {
+  completed: string,
+  description: string,
+  public: string,
+  title: string,
+  userId: string,
+  year: string,
+  _id: string,
+}
+
 const TodoList = ( ) => {
-  interface TodoSet {
-    completed: string,
-    description: string,
-    public: string,
-    title: string,
-    userId: string,
-    year: string,
-    _id: string,
-  }
   const { data, isLoading, isSuccess, refetch }:UseQueryResult<TodoSet, Error> =
       useQuery<TodoSet, Error>(QUERY_KEYS.TODO, () => todoService.getTodos());
   if (isLoading) return <Text>is loading</Text>;

@@ -31,12 +31,12 @@ class HttpService {
     return this.fetchingService.get(this.getFullApiUrl(id));
   }
 
-  put(id: string, data:ITodo) {
+  put<T>(id: string, data:T): Promise<any> {
     return this.fetchingService.put(
         this.getFullApiUrl(id), data);
   }
 
-  post(data:ITodo) {
+  post<T>(data:T): Promise<any> {
     return this.fetchingService.post(
         this.getFullApiUrl(''), data);
   }
