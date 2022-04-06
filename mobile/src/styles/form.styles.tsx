@@ -11,6 +11,15 @@ export const styles = StyleSheet.create({
     color: THEME.Colors.white,
     marginBottom: THEME.Spacings.sp30,
   },
+  link2: {
+    borderRadius: THEME.Size.size10,
+    height: THEME.Size.size50,
+    width: THEME.Size.size245,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: THEME.Colors.blue90,
+    color: THEME.Colors.white,
+  },
   text: {
     paddingHorizontal: THEME.Size.size30,
     marginBottom: THEME.Spacings.sp10, width: '100%',

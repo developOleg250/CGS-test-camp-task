@@ -6,7 +6,15 @@ export class TodoController {
  constructor(private todoService: TodoService) {}
 
  async getAllTodo(req: Request, res: Response){
-    return  await this.todoService.findAll(req.user.id);
+  //  console.log(req.user.id);
+  // console.log(req.query);
+  if (Object.keys(req.query).length === 0)
+  return  await this.todoService.findAll(req.user.id, null);
+  else 
+  if (req.query.search == '' && req.query.status == 'false')
+    return  await this.todoService.findAll(req.user.id, null)
+    else 
+    return  await this.todoService.findAll(req.user.id, req.query);
   }
 
  async createOneTodo(req: Request, res: Response) {

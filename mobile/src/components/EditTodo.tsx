@@ -24,7 +24,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 
-const CreateTodo = () => {
+const EditTodo = () => {
   const { id } = useParams();
 
   const { isLoading, data }=
@@ -48,7 +48,6 @@ const CreateTodo = () => {
     initialValues: getData(),
     enableReinitialize: true,
     onSubmit: async (values) => {
-      // console.log(values);
       const data = {
         'completed': values.completed,
         'public': values.public,
@@ -134,5 +133,5 @@ const CreateTodo = () => {
   );
 };
 
-export default CreateTodo;
+export default EditTodo;
 

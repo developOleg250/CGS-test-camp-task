@@ -7,7 +7,6 @@ import StartPage from './auth/StartPage';
 import CreateTodo from './CreateTodo';
 import EditTodo from './EditTodo';
 import TodoList from './TodoList';
-// import TodoList from './TodoList';
 
 const AppContent = () => {
   return (

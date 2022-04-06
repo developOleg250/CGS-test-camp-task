@@ -1,12 +1,17 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { TextInput as RNTextInput,
+  FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 import Todo from './Todo';
 import Link from '../common/Link';
 import { QUERY_KEYS } from '../data/data';
 import { todoService } from '../api/api';
 import { useQuery, UseQueryResult } from 'react-query';
 import { THEME } from '../styles/theme';
-
+import Filters from './Filters/Filters';
+import TextInput from '../common/TextInput';
+import CheckBox2 from '../common/CheckBox';
+import { styles } from '../styles/form.styles';
+import { Link as RNLink, useParams } from 'react-router-dom';
 interface TodoSet {
   completed: string,
   description: string,
@@ -18,11 +23,20 @@ interface TodoSet {
 }
 
 const TodoList = ( ) => {
-  const { data, isLoading, isSuccess, refetch }:UseQueryResult<TodoSet, Error> =
-      useQuery<TodoSet, Error>(QUERY_KEYS.TODO, () => todoService.getTodos());
+  // after useQuery get error!
+  const [valueParam, setChangeParam] = useState<string>('');
+
+  const { data, isLoading, isSuccess, refetch } =
+      useQuery(QUERY_KEYS.TODO, () =>
+        todoService.getTodos(valueParam));
+
   if (isLoading) return <Text>is loading</Text>;
   if (!isSuccess) return <Text>Error</Text>;
 
+  const handleChangeParam = async (params:string) => {
+    await setChangeParam(params); // await for update ans set  state
+    setTimeout(() => refetch(), 100); // refetch done fast!
+  };
   const renderItem = ({ item }:{ item: TodoSet}) =>
     <Todo
       _id={item._id}
@@ -36,27 +50,33 @@ const TodoList = ( ) => {
     />;
 
   return (
-    <View>
-      <View style={{ paddingBottom: THEME.Spacings.sp30,
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingBottom: THEME.Spacings.sp30,
         paddingTop: THEME.Spacings.sp20,
         justifyContent: 'center',
         alignItems: 'center' }}>
-        <View style={{ paddingBottom: THEME.Spacings.sp30}}>
+        <View style={{ paddingBottom: THEME.Spacings.sp30 }}>
           <Link
             text = 'Back'
             path = {''}
             params={''}
-            style={styles.link}
+            style={styles.link2}
           >
           </Link>
         </View>
         <Link
           text='Create Todo'
           path = {'/createTodo'}
-          params={''} style={styles.link}>
+          params={''} style={styles.link2}>
         </Link>
-        <Text>{localStorage.getItem('userId')}</Text>
+        {/* <Text>{localStorage.getItem('userId')}</Text>
+        <Text>{valueParam}</Text> */}
       </View>
+      <Filters
+        valueParam={valueParam}
+        handleChangeParam={handleChangeParam}
+      >
+      </Filters>
       <FlatList
         data={data}
         renderItem={renderItem}
@@ -68,14 +88,3 @@ const TodoList = ( ) => {
 
 export default TodoList;
 
-const styles = StyleSheet.create({
-  link: {
-    borderRadius: THEME.Size.size10,
-    height: THEME.Size.size50,
-    width: THEME.Size.size245,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: THEME.Colors.blue90,
-    color: THEME.Colors.white,
-  },
-});

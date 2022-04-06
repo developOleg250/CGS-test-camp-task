@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import AppContent from './src/components/AppContent';
-import StartPage from './src/components/auth/StartPage';
+import { THEME } from './src/styles/theme';
 
 const queryClient = new QueryClient();
 
@@ -23,7 +23,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    padding: 25,
+    backgroundColor: THEME.Colors.white,
+    padding: THEME.Size.size20,
   },
 });

@@ -36,7 +36,7 @@ export default function Login() {
         'password': values.password,
       };
       const res = await userService.login(data);
-      // console.log(res.data);
+      console.log(res.data);
       localStorage.setItem('token', 'Bearer '+res.data.token);
       localStorage.setItem('userId', ''+ res.data.user._id);
       // console.log(res.data);

@@ -12,8 +12,9 @@ class TodoService extends HttpService {
         fetchingService,
         apiVersion);
   }
-  async getTodos() {
-    const { data } = await this.get('');
+  async getTodos(params:string) {
+    console.log(params);
+    const { data } = await this.get(params);
     return data;
   }
   async getTodosById(id:string) {
