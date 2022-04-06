@@ -21,7 +21,12 @@ const todoSchema: Schema = new Schema({
  public: {
   type: Boolean,
   default: false,
+ },
+ userId: {
+  type: String,
+  default: 'null',
  }
+
 });
 
 const Todo: Model<ITodo> = model("Todo", todoSchema);

@@ -1,15 +1,14 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+import { bodyValidation } from "../../middleware/validate";
+import { userSchema } from "../../types/user.type";
+import { passportLoginAuthenticate, passportSignUpAuthenticate } from "../../middleware/auth.middleware";
 
-const router: Router = Router();
+const userRouter: Router = Router();
 
 // @route   POST api/user
 // @desc    Register user given their email and password, returns the token upon successful registration
 // @access  Public
-router.post(
- "/register",
- async (_: Request, res: Response) => {
-  res.send("Add registration logic there");
- }
-);
+userRouter.post('/signup', bodyValidation(userSchema), passportSignUpAuthenticate );
+userRouter.post('/login', bodyValidation(userSchema), passportLoginAuthenticate );
 
-export default router;
+export default userRouter;

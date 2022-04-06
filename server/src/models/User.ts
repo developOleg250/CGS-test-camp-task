@@ -1,16 +1,7 @@
-import { Document, Model, model, Schema } from "mongoose";
-// TODO: Use it as an example
-/**
- * Interface to model the User Schema for TypeScript.
- * @param email:string
- * @param password:string
- * @param avatar:string
- */
-export interface IUser extends Document {
- email: string;
- password: string;
- avatar: string;
-}
+import { Model, model, Schema } from "mongoose";
+import { IUser } from "../types/user.type";
+import { NextFunction } from "express";
+import { hashPassword, UPDATE } from "../middleware/hash";
 
 const userSchema: Schema = new Schema({
  email: {
@@ -23,7 +14,8 @@ const userSchema: Schema = new Schema({
   required: true
  },
  avatar: {
-  type: String
+  type: String,
+  default: 'avatar'
  },
  date: {
   type: Date,
@@ -31,6 +23,16 @@ const userSchema: Schema = new Schema({
  }
 });
 
-const User: Model<IUser> = model("User", userSchema);
+userSchema.pre(
+  'save',
+  async function(next: NextFunction) {
+  const user = this;
+  const hash = hashPassword(this.password, UPDATE)
+  this.password = hash;
+  next();
+  }
+  );
+
+const User: Model<IUser> = model('User', userSchema);
 
 export default User;
