@@ -1,17 +1,14 @@
-import { TextInput as RNTextInput,
-  FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import Todo from './Todo';
 import Link from '../common/Link';
 import { QUERY_KEYS } from '../data/data';
 import { todoService } from '../api/api';
-import { useQuery, UseQueryResult } from 'react-query';
+import { useQuery } from 'react-query';
 import { THEME } from '../styles/theme';
 import Filters from './Filters/Filters';
-import TextInput from '../common/TextInput';
-import CheckBox2 from '../common/CheckBox';
 import { styles } from '../styles/form.styles';
-import { Link as RNLink, useParams } from 'react-router-dom';
+import Button from '../common/Button';
 interface TodoSet {
   completed: string,
   description: string,
@@ -25,10 +22,16 @@ interface TodoSet {
 const TodoList = ( ) => {
   // after useQuery get error!
   const [valueParam, setChangeParam] = useState<string>('');
+  const [valuePagination, setChangePagination] = useState<number>(2);
 
+  const handleChangePagination = () => {
+    // await for update ans set  state
+    setChangePagination(valuePagination+2);
+    setTimeout(() => refetch(), 50); // refetch done fast!
+  };
   const { data, isLoading, isSuccess, refetch } =
       useQuery(QUERY_KEYS.TODO, () =>
-        todoService.getTodos(valueParam));
+        todoService.getTodos('?limit='+valuePagination+valueParam));
 
   if (isLoading) return <Text>is loading</Text>;
   if (!isSuccess) return <Text>Error</Text>;
@@ -69,11 +72,8 @@ const TodoList = ( ) => {
           path = {'/createTodo'}
           params={''} style={styles.link2}>
         </Link>
-        {/* <Text>{localStorage.getItem('userId')}</Text>
-        <Text>{valueParam}</Text> */}
       </View>
       <Filters
-        valueParam={valueParam}
         handleChangeParam={handleChangeParam}
       >
       </Filters>
@@ -82,6 +82,11 @@ const TodoList = ( ) => {
         renderItem={renderItem}
         keyExtractor={ (item) => item._id}
       />
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        <Button label='Load new todo'
+          onPress={() => handleChangePagination()}
+        />
+      </View>
     </View>
   );
 };

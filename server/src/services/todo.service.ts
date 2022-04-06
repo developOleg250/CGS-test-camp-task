@@ -3,29 +3,27 @@ import { ITodo,IdTodo } from "todos.type";
 
 interface IQuery { 
   search: string,
-  status: string
+  status: string,
+  limit: string,
  }
 
 export default class TodoService {
- async findAll(userId:string, query) {
-  //  console.log('userId='+userId);
-    if(query==null) {
-    //  console.log('0000');
-     const findTodo = await Todo.find( {$or : [{userId}, {public: true}]});
-      return findTodo
-   } else {
-    // console.log('11111');
-    const findTodo = await Todo.find( {
-          $and: [
-              { $or: [{userId}, {public: true}] },
-              {title: query.search}, // completed: query.status
-              { $and: [{completed: query.status}, {}] }
-          ]
-      });
-     return findTodo
-  }
+ async findAll(userId:string, query:IQuery) { //
+   let status = query.status === 'true' ? true : false;
+
+   if ((query.search == '' && query.status == 'false') || query.search === undefined) {
+      return await Todo.find({$or : [{userId}, {public: true}]}).limit(Number(query.limit));
+   }
+   if (query.search != undefined &&  query.status != undefined) {
+      return await Todo.find( {$and: [
+        { $or: [{userId}, {public: true}] },
+        {title: query.search},
+        {completed: query.status},
+      ]}).limit(Number(query.limit));
+ }
  
  }
+
  async create(todo:ITodo, userId:string) {
   console.log(userId);
    const createTodo = await Todo.create({...todo,userId } )

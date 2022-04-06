@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { THEME } from '../../styles/theme';
 import { TextInput as RNTextInput,
   View, CheckBox as RNCheckBox } from 'react-native';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+interface Handle {
+  handleChangeParam: (params: string)=>void,
+}
 
-const Filters:React.FC = ({valueParam, handleChangeParam}) => {
+const Filters:React.FC<Handle> = ({ handleChangeParam }) => {
   const navigate = useNavigate();
 
   const [valueInput, setChangeInput] = useState<string>('');
@@ -15,14 +18,13 @@ const Filters:React.FC = ({valueParam, handleChangeParam}) => {
     setChangeInput(value);
   };
   const handeEndEdit = () => {
-    console.log('edit');
     navigate('?search='+valueInput+'&status='+valueCheckBox);
-    handleChangeParam('?search='+valueInput+'&status='+valueCheckBox);
+    handleChangeParam('&search='+valueInput+'&status='+valueCheckBox);
   };
   const handleChangeCheckBox= async () => {
     setChangeCheckBox((valueCheckBox) => !valueCheckBox);
     navigate('?search='+valueInput+'&status='+!valueCheckBox);
-    handleChangeParam('?search='+valueInput+'&status='+!valueCheckBox);
+    handleChangeParam('&search='+valueInput+'&status='+!valueCheckBox);
   };
 
   return (
@@ -37,7 +39,7 @@ const Filters:React.FC = ({valueParam, handleChangeParam}) => {
         // flex: 1,
         borderWidth: 1,
         borderRadius: THEME.Size.size5,
-        borderColor: THEME.Colors.red1,
+        borderColor: THEME.Colors.blue90,
         width: '80%',
         height: THEME.Size.size50,
         flexDirection: 'row',
