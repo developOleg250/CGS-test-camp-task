@@ -40,6 +40,7 @@ const TodoList = ( ) => {
     await setChangeParam(params); // await for update ans set  state
     setTimeout(() => refetch(), 100); // refetch done fast!
   };
+
   const renderItem = ({ item }:{ item: TodoSet}) =>
     <Todo
       _id={item._id}
@@ -53,6 +54,7 @@ const TodoList = ( ) => {
     />;
 
   return (
+
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, paddingBottom: THEME.Spacings.sp30,
         paddingTop: THEME.Spacings.sp20,

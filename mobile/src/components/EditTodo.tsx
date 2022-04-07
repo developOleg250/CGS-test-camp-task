@@ -9,10 +9,12 @@ import TextArea from '../common/TextArea';
 import { useNavigate, useParams } from 'react-router-dom';
 import Link from '../common/Link';
 import { todoService } from '../api/api';
+
 import { useQuery, useQueryClient } from 'react-query';
 import { styles } from '../styles/form.styles';
 import { QUERY_KEYS, ROUTER_KEYS } from '../data/data';
 import { useEditTodo } from '../hook/hook';
+
 
 const LoginSchema = Yup.object().shape({
   title: Yup.string().min(3).max(20).required('Required'),
@@ -33,6 +35,7 @@ const EditTodo = () => {
   const { id } = useParams();
 
   const { isLoading, data }=
+
   useQuery(QUERY_KEYS.POST_ID(id), () => todoService.getTodosById(id+''));
   const getData = () => data || tempData;
   const tempData = { check: false, title: '', year: '',
@@ -61,6 +64,7 @@ const EditTodo = () => {
       // await todoService.updateTodo(values._id, data);
       // navigate(ROUTER_KEYS.TODO_LIST);
       await mutateAsync({ id: values._id, data });
+
     },
   });
 

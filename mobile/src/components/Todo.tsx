@@ -1,8 +1,10 @@
 // import CheckBox from '@react-native-community/checkbox';
 import React from 'react';
+
 import { StyleSheet, Text, View } from 'react-native';
 import { THEME } from '../styles/theme';
 import Panel from './Panel';
+
 
 interface ITodo{
   _id: string;
