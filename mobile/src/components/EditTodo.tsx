@@ -9,9 +9,10 @@ import TextArea from '../common/TextArea';
 import { useNavigate, useParams } from 'react-router-dom';
 import Link from '../common/Link';
 import { todoService } from '../api/api';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { styles } from '../styles/form.styles';
-import { ROUTER_KEYS } from '../data/data';
+import { QUERY_KEYS, ROUTER_KEYS } from '../data/data';
+import { useEditTodo } from '../hook/hook';
 
 const LoginSchema = Yup.object().shape({
   title: Yup.string().min(3).max(20).required('Required'),
@@ -25,15 +26,17 @@ const LoginSchema = Yup.object().shape({
 
 
 const EditTodo = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useEditTodo(navigate, queryClient);
+
   const { id } = useParams();
 
   const { isLoading, data }=
-  useQuery(['posts', id], () => todoService.getTodosById(id+''));
+  useQuery(QUERY_KEYS.POST_ID(id), () => todoService.getTodosById(id+''));
   const getData = () => data || tempData;
   const tempData = { check: false, title: '', year: '',
     description: '', completed: '', public: false };
-
-  const navigate = useNavigate();
 
   const {
     handleChange,
@@ -55,8 +58,9 @@ const EditTodo = () => {
         'description': values.description,
         'year': values.year,
       };
-      await todoService.updateTodo(values._id, data);
-      navigate(ROUTER_KEYS.TODO_LIST);
+      // await todoService.updateTodo(values._id, data);
+      // navigate(ROUTER_KEYS.TODO_LIST);
+      await mutateAsync({ id: values._id, data });
     },
   });
 

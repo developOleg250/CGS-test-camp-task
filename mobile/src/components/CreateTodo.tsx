@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { todoService } from '../api/api';
 import { styles } from '../styles/form.styles';
 import { ROUTER_KEYS } from '../data/data';
+import { useQueryClient } from 'react-query';
+import { useAddTodo } from '../hook/hook';
 
 const LoginSchema = Yup.object().shape({
   title: Yup.string().min(3).max(20).required('Required'),
@@ -25,6 +27,8 @@ const LoginSchema = Yup.object().shape({
 
 export default function CreateTodo() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useAddTodo(navigate, queryClient);
 
   const {
     handleChange,
@@ -46,8 +50,7 @@ export default function CreateTodo() {
         'description': values.description,
         'year': values.year,
       };
-      await todoService.addTodo(data);
-      navigate(ROUTER_KEYS.TODO_LIST);
+      await mutateAsync( data );
     },
   });
 

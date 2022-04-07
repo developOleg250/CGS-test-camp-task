@@ -1,7 +1,10 @@
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
+import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { todoService } from '../api/api';
 import Link from '../common/Link';
+import { useDeleteTodo } from '../hook/hook';
 import { THEME } from '../styles/theme';
 
 interface IPanel{
@@ -10,6 +13,9 @@ interface IPanel{
 }
 
 const Panel:React.FC<IPanel> = ({ _id, handleUpdate }) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useDeleteTodo(navigate, queryClient);
   return (
     <View style={{ flex: 2, flexDirection: 'row' }}>
       <View
@@ -35,7 +41,7 @@ const Panel:React.FC<IPanel> = ({ _id, handleUpdate }) => {
       }}>
         <Button
           onPress={async () => {
-            await todoService.deleteTodo(_id);
+            await mutateAsync(_id);
             handleUpdate();
           }}
           title='Del'

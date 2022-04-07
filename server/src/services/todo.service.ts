@@ -11,7 +11,7 @@ export default class TodoService {
  async findAll(userId:string, query:IQuery) { //
    let status = query.status === 'true' ? true : false;
 
-   if ((query.search == '' && query.status == 'false') || query.search === undefined) {
+   if ((query.search === '' && query.status === 'false') || query.search === undefined) {
       return await Todo.find({$or : [{userId}, {public: true}]}).limit(Number(query.limit));
    }
    if (query.search != undefined &&  query.status != undefined) {
@@ -21,7 +21,6 @@ export default class TodoService {
         {completed: query.status},
       ]}).limit(Number(query.limit));
  }
- 
  }
 
  async create(todo:ITodo, userId:string) {
