@@ -3,19 +3,23 @@ import { StyleSheet, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import AppContent from './src/components/AppContent';
-import { THEME } from './src/styles/theme';
+
+
+import { NavigationContainer, useRoute } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const queryClient = new QueryClient();
 
+
 export default function App() {
   return (
-    <BrowserRouter>
+    <NavigationContainer>
       <View style={styles.container}>
         <QueryClientProvider client={queryClient}>
-          <AppContent />
+          <AppContent/>
         </QueryClientProvider>
       </View>
-    </BrowserRouter>
+    </NavigationContainer>
   );
 }
 
@@ -23,7 +27,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: THEME.Colors.white,
-    padding: THEME.Size.size20,
+    backgroundColor: '#fff',
+    padding: 25,
   },
 });
