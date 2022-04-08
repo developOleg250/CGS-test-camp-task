@@ -3,11 +3,11 @@ import { todoService, userService } from '../api/api';
 import { QUERY_KEYS, ROUTER_KEYS } from '../data/data';
 
 export function useAddTodo(navigator, queryClient) {
-  const { mutateAsync } = useMutation(QUERY_KEYS.ADD_TODO,
+  const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (data) => todoService.addTodo(data), {
         onSuccess: () => {
-          navigator.navigate(ROUTER_KEYS.CREATE_TODO);
-          queryClient.invalidateQueries(QUERY_KEYS.ADD_TODO);
+          navigator.navigate(ROUTER_KEYS.TODO_LIST);
+          queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
           console.log(error.message);
@@ -19,11 +19,11 @@ export function useAddTodo(navigator, queryClient) {
 
 
 export function useEditTodo(navigator, queryClient) {
-  const { mutateAsync } = useMutation(QUERY_KEYS.EDIT_TODO,
+  const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (data) => todoService.updateTodo(data.id, data.data), {
         onSuccess: () => {
-          navigator.navigate(ROUTER_KEYS.EDIT_TODO);
-          queryClient.invalidateQueries(QUERY_KEYS.EDIT_TODO);
+          navigator.navigate(ROUTER_KEYS.TODO_LIST);
+          queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
           console.log(error.message);
@@ -35,11 +35,11 @@ export function useEditTodo(navigator, queryClient) {
 
 
 export function useDeleteTodo(navigator, queryClient) {
-  const { mutateAsync } = useMutation(QUERY_KEYS.DELETE_TODO,
+  const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (id) => todoService.deleteTodo(id), {
         onSuccess: () => {
           navigator.navigate(ROUTER_KEYS.TODO_LIST);
-          queryClient.invalidateQueries(QUERY_KEYS.EDIT_TODO);
+          queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
           console.log(error.message);
@@ -51,11 +51,11 @@ export function useDeleteTodo(navigator, queryClient) {
 
 
 export function useLogin(navigator, queryClient) {
-  const { mutateAsync } = useMutation(QUERY_KEYS.LOGIN,
+  const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (data) => userService.login(data), {
         onSuccess: () => {
           navigator.navigate(ROUTER_KEYS.TODO_LIST);
-          queryClient.invalidateQueries(QUERY_KEYS.LOGIN);
+          queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
           // console.log(error.message);
@@ -68,11 +68,11 @@ export function useLogin(navigator, queryClient) {
 
 export function useRegister(navigator, queryClient) {
   console.log('test registr');
-  const { mutateAsync } = useMutation(QUERY_KEYS.REGISTER,
+  const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (data) => userService.register(data), {
         onSuccess: () => {
           // navigator.navigate(ROUTER_KEYS.TODO_LIST);
-          queryClient.invalidateQueries(QUERY_KEYS.REGISTER);
+          queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
           console.log(error.message);

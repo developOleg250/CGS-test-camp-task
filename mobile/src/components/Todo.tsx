@@ -1,8 +1,10 @@
 // import CheckBox from '@react-native-community/checkbox';
 import React from 'react';
+
 import { StyleSheet, Text, View } from 'react-native';
 import { THEME } from '../styles/theme';
 import Panel from './Panel';
+
 
 interface ITodo{
   _id: string;
@@ -67,7 +69,7 @@ const Todo:React.FC<ITodo> = ({
         {/* Edit  */}{/* Delete */}
         {/* {(localStorage.getItem('userId') == userId) ?
          <Panel _id={_id} handleUpdate={handleUpdate}></Panel> : null} */}
-         <Panel _id={_id} handleUpdate={handleUpdate}></Panel>
+        <Panel _id={_id} handleUpdate={handleUpdate}></Panel>
       </View>
     </View>
   );

@@ -54,7 +54,7 @@ const Filters:React.FC<Handle> = ({ handleChangeParam }) => {
             placeholder='search todos'
             onChange={(e) => handleChangeInput(e.target.value)}
             onKeyPress={ async (event) => {
-              if (event.nativeEvent.key == 'Enter') {
+              if (event.nativeEvent.key === 'Enter') {
                 await handeEndEdit();
               }
             }}

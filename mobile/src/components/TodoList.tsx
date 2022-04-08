@@ -1,5 +1,5 @@
 import { FlatList, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Todo from './Todo';
 import Link from '../common/Link';
 import { QUERY_KEYS, ROUTER_KEYS } from '../data/data';
@@ -27,22 +27,27 @@ const TodoList = ( {navigation}) => {
   const [valueParam, setChangeParam] = useState<string>('');
   const [valuePagination, setChangePagination] = useState<number>(2);
 
-  const handleChangePagination = () => {
+  const handleChangePagination = async () => {
     // await for update ans set  state
     setChangePagination(valuePagination+2);
-    setTimeout(() => refetch(), 50); // refetch done fast!
   };
+
   const { data, isLoading, isSuccess, refetch } =
-      useQuery(QUERY_KEYS.TODO, () =>
+      useQuery(QUERY_KEYS.TODO, async () =>
         todoService.getTodos('?limit='+valuePagination+valueParam));
 
-  if (isLoading) return <Text>is loading  </Text>;
+  useEffect(() => {
+    refetch();
+  }, [valuePagination, valueParam]);
+
+  if (isLoading) return <Text>is loading</Text>;
+
   if (!isSuccess) return <Text>Error</Text>;
 
   const handleChangeParam = async (params:string) => {
-    await setChangeParam(params); // await for update ans set  state
-    setTimeout(() => refetch(), 100); // refetch done fast!
+    setChangeParam(params); // await for update ans set  state
   };
+
   const renderItem = ({ item }:{ item: TodoSet}) =>
     <Todo
       _id={item._id}
@@ -56,6 +61,7 @@ const TodoList = ( {navigation}) => {
     />;
 
   return (
+
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1,
         // paddingBottom: THEME.Spacings.sp30,
