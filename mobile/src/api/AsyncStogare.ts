@@ -13,7 +13,7 @@ export const setToken = async (data) => {
     );
   } catch (error) {
     // Error saving data
-    console.log(error);
+    // console.log(error);
   };
 };
 

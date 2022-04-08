@@ -16,8 +16,6 @@ class UserService extends HttpService {
     return await this.post<IUser>(user, 'login');
   }
   async register(data:IUser) {
-    console.log('user.service.reg');
-    
     return await this.post<IUser>(data, 'signup');
   }
 }

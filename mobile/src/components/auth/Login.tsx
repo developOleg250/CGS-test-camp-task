@@ -34,7 +34,7 @@ export default function Login() {
     };
     const res = await mutateAsync(data);
     await setToken(res.data);
-    console.log(await getToken());
+    // console.log(await getToken());
   };
 
   const {
@@ -54,14 +54,12 @@ export default function Login() {
     <View
       style={styles.login}
     >
-      {/* <Link
-        text = 'Home'
-        path = {''}
-        params={''}
-        style={styles.link}
-      >
-      </Link> */}
-
+      <View style={{margin: THEME.Spacings.sp30 }}>
+        <Button
+          label='Home'
+          onPress={() => navigator.navigate(ROUTER_KEYS.HOME)}
+        />
+      </View>
       <Text style={styles.edit}>
         Login
       </Text>

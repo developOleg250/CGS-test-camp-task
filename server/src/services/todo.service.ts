@@ -23,7 +23,6 @@ export default class TodoService {
  }
 
  async create(todo:ITodo, userId:string) {
-  console.log(userId);
    const createTodo = await Todo.create({...todo,userId } )
   return createTodo
  }

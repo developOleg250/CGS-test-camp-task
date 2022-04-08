@@ -40,14 +40,14 @@ export default function Register({navigation}) {
         'email': values.email,
         'password': values.password,
       };
-      console.log('register tsx');
+      // console.log('register tsx');
       const res = await mutateAsync(data);
-      console.log(res);
+      // console.log(res);
       if (res.data.token != undefined) {
         await setToken(res.data);
         navigator.navigate(ROUTER_KEYS.TODO_LIST);
       }
-      console.log(await getToken());
+      // console.log(await getToken());
     },
   });
 
@@ -55,13 +55,12 @@ export default function Register({navigation}) {
     <View
       style={styles.login}
     >
-      {/* <Link
-        text = 'Home'
-        path = {''}
-        params={''}
-        style={styles.link}
-      >
-      </Link> */}
+      <View style={{ margin: THEME.Spacings.sp30 }}>
+        <Button
+          label='Home'
+          onPress={() => navigator.navigate(ROUTER_KEYS.HOME)}
+        />
+      </View>
 
       <Text style={styles.edit}>
         Register

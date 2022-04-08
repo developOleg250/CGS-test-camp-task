@@ -18,7 +18,6 @@ class HttpService {
   }
 
   private getFullApiUrl(id:string) {
-    console.log(`${this.baseUrl}/${this.apiVersion}/${id}`);
     return `${this.baseUrl}/${this.apiVersion}/${id}`;
   }
 

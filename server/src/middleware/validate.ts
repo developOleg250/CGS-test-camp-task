@@ -5,12 +5,9 @@ import Todo from "../models/Todo";
 //validation id in base
 export const isExistInBase = () => 
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log('isExistInBase');
   try{
   const { id }  = req.params;
-  console.log(id);
   const findId = await Todo.findById({ _id: id });
-  console.log(findId);
   if (findId === null) throw Error('error');
   return next();
   }
@@ -24,8 +21,6 @@ export const isExistInBase = () =>
 //validation body
 export const bodyValidation = (schema:any ) => 
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.headers);
-    
     
 	const { error } = schema.validate(req.body);
 	if (error) {

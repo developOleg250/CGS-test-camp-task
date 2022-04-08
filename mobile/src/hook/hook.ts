@@ -10,7 +10,7 @@ export function useAddTodo(navigator, queryClient) {
           queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
-          console.log(error.message);
+          // console.log(error.message);
         },
       });
 
@@ -26,7 +26,7 @@ export function useEditTodo(navigator, queryClient) {
           queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
-          console.log(error.message);
+          // console.log(error.message);
         },
       });
 
@@ -42,7 +42,7 @@ export function useDeleteTodo(navigator, queryClient) {
           queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
-          console.log(error.message);
+          // console.log(error.message);
         },
       });
 
@@ -67,7 +67,6 @@ export function useLogin(navigator, queryClient) {
 
 
 export function useRegister(navigator, queryClient) {
-  console.log('test registr');
   const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (data) => userService.register(data), {
         onSuccess: () => {
@@ -75,7 +74,7 @@ export function useRegister(navigator, queryClient) {
           queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
-          console.log(error.message);
+          // console.log(error.message);
         },
       });
 

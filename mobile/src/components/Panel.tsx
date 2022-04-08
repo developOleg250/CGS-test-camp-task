@@ -29,7 +29,9 @@ const Panel:React.FC<IPanel> = ({ _id, handleUpdate }) => {
         }}>
         <Button
           onPress={async () => {
-            navigator.navigate(ROUTER_KEYS.EDIT_TODO);
+            navigator.navigate(ROUTER_KEYS.EDIT_TODO, {
+              id: _id,
+            } );
           }}
           title='Edit'
           color={THEME.Colors.pink1}

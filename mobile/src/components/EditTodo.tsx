@@ -28,15 +28,13 @@ const LoginSchema = Yup.object().shape({
 });
 
 
-const EditTodo = () => {
+const EditTodo = ({navigate, route}) => {
   const navigator = useNavigation();
   const queryClient = useQueryClient();
   const { mutateAsync } = useEditTodo(navigator, queryClient);
 
-  // const { id } = useParams();
- const id = '624fd62cf4433e2d47034353';
+  const { id } = route.params;
   const { isLoading, data }=
-
   useQuery(QUERY_KEYS.POST_ID(id), () => todoService.getTodosById(id+''));
   const getData = () => data || tempData;
   const tempData = { check: false, title: '', year: '',
@@ -71,14 +69,6 @@ const EditTodo = () => {
     <View
       style={styles.title}
     >
-      {/* <Link
-        text = 'Home'
-        path = {''}
-        params={''}
-        style={styles.link}
-      >
-      </Link> */}
-
       <Text style={styles.edit}>
         Edit Todo
       </Text>
@@ -93,7 +83,7 @@ const EditTodo = () => {
           value={values.title}
         />
       </View>
-      {/* <View style={styles.text}>
+      <View style={styles.text}>
         <TextArea
           text='Description'
           defaultValue={values.description}
@@ -103,7 +93,7 @@ const EditTodo = () => {
           error={errors.description}
           touched={touched.description}
         />
-      </View> */}
+      </View>
       <View style={styles.text}>
         <TextInput
           text='Year'

@@ -61,14 +61,6 @@ export default function CreateTodo() {
     <View
       style={styles.title}
     >
-      {/* <Link
-        text = 'Home'
-        path = {''}
-        params={''}
-        style={styles.link}
-      >
-      </Link> */}
-
       <Text style={styles.edit}>
         Create new Todo
       </Text>
@@ -83,7 +75,7 @@ export default function CreateTodo() {
           value={values.title}
         />
       </View>
-      {/* <View style={styles.text}>
+      <View style={styles.text}>
         <TextArea
           text='Description'
           defaultValue={values.description}
@@ -93,7 +85,7 @@ export default function CreateTodo() {
           error={errors.description}
           touched={touched.description}
         />
-      </View> */}
+      </View>
       <View style={styles.text}>
         <TextInput
           text='Year'
