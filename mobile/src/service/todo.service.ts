@@ -21,8 +21,6 @@ class TodoService extends HttpService {
     return data;
   }
   async updateTodo(id:string, data:ITodo) {
-    console.log(id);
-    console.log(data);
     return await this.put<ITodo>(id, data);
   }
   async addTodo(data:ITodo) {

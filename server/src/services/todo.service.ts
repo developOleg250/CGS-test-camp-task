@@ -9,7 +9,6 @@ interface IQuery {
 
 export default class TodoService {
  async findAll(userId:string, query:IQuery) { //
-   let status = query.status === 'true' ? true : false;
 
    if ((query.search === '' && query.status === 'false') || query.search === undefined) {
       return await Todo.find({$or : [{userId}, {public: true}]}).limit(Number(query.limit));

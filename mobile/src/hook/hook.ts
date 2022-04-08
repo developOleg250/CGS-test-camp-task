@@ -3,11 +3,11 @@ import { todoService } from '../api/api';
 import { QUERY_KEYS, ROUTER_KEYS } from '../data/data';
 
 export function useAddTodo(navigate, queryClient) {
-  const { mutateAsync } = useMutation(QUERY_KEYS.ADD_TODO,
+  const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (data) => todoService.addTodo(data), {
         onSuccess: () => {
           navigate(ROUTER_KEYS.TODO_LIST);
-          queryClient.invalidateQueries(QUERY_KEYS.ADD_TODO);
+          queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
           console.log(error.message);
@@ -19,11 +19,11 @@ export function useAddTodo(navigate, queryClient) {
 
 
 export function useEditTodo(navigate, queryClient) {
-  const { mutateAsync } = useMutation(QUERY_KEYS.EDIT_TODO,
+  const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (data) => todoService.updateTodo(data.id, data.data), {
         onSuccess: () => {
           navigate(ROUTER_KEYS.TODO_LIST);
-          queryClient.invalidateQueries(QUERY_KEYS.EDIT_TODO);
+          queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
           console.log(error.message);
@@ -35,11 +35,11 @@ export function useEditTodo(navigate, queryClient) {
 
 
 export function useDeleteTodo(navigate, queryClient) {
-  const { mutateAsync } = useMutation(QUERY_KEYS.DELETE_TODO,
+  const { mutateAsync } = useMutation(QUERY_KEYS.TODO,
       (id) => todoService.deleteTodo(id), {
         onSuccess: () => {
           navigate(ROUTER_KEYS.TODO_LIST);
-          queryClient.invalidateQueries(QUERY_KEYS.EDIT_TODO);
+          queryClient.invalidateQueries(QUERY_KEYS.TODO);
         },
         onError: (error: any) => {
           console.log(error.message);
