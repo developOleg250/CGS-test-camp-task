@@ -8,7 +8,7 @@ const todosRouter: Router = Router();
  
 
 todosRouter.get("",
- isValidToken(),  
+ isValidToken(),
  tryCatchMiddleware(todoController.getAllTodo.bind(todoController)));
 todosRouter.get("/:id", isExistInBase(), isValidToken(), tryCatchMiddleware(todoController.getTodoById.bind(todoController)));
 todosRouter.post("", bodyValidation(todoSchema), isValidToken(), tryCatchMiddleware(todoController.createOneTodo.bind(todoController)));

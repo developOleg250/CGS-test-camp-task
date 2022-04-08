@@ -65,8 +65,9 @@ const Todo:React.FC<ITodo> = ({
           </View>
         </View>
         {/* Edit  */}{/* Delete */}
-        {(localStorage.getItem('userId') == userId) ?
-         <Panel _id={_id} handleUpdate={handleUpdate}></Panel> : null}
+        {/* {(localStorage.getItem('userId') == userId) ?
+         <Panel _id={_id} handleUpdate={handleUpdate}></Panel> : null} */}
+         <Panel _id={_id} handleUpdate={handleUpdate}></Panel>
       </View>
     </View>
   );

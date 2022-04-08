@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     margin: THEME.Size.size5,
     borderWidth: 1,
     borderColor: THEME.Colors.grayLight,
-    padding: THEME.Spacings.sp10,
+    padding: THEME.Spacings.sp5,
   },
   label: {
     margin: THEME.Spacings.sp10,

@@ -9,7 +9,7 @@ interface Handle {
 }
 
 const Filters:React.FC<Handle> = ({ handleChangeParam }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [valueInput, setChangeInput] = useState<string>('');
   const [valueCheckBox, setChangeCheckBox] = useState<boolean>(false);
@@ -18,12 +18,12 @@ const Filters:React.FC<Handle> = ({ handleChangeParam }) => {
     setChangeInput(value);
   };
   const handeEndEdit = () => {
-    navigate('?search='+valueInput+'&status='+valueCheckBox);
+    // navigate('?search='+valueInput+'&status='+valueCheckBox);
     handleChangeParam('&search='+valueInput+'&status='+valueCheckBox);
   };
   const handleChangeCheckBox= async () => {
     setChangeCheckBox((valueCheckBox) => !valueCheckBox);
-    navigate('?search='+valueInput+'&status='+!valueCheckBox);
+    // navigate('?search='+valueInput+'&status='+!valueCheckBox);
     handleChangeParam('&search='+valueInput+'&status='+!valueCheckBox);
   };
 

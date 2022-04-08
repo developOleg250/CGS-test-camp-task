@@ -19,6 +19,7 @@ export const loginStrategy = new LocalStrategy.Strategy(
   },
   async (email, password, done) => {
     try {
+      console.log('s1111');
       //find user exist in base=>true
       const user = await User.findOne({ email });
       // console.log(user);

@@ -13,6 +13,8 @@ import passport from 'passport';
 import passportJWT from "passport-jwt";
 import { loginStrategy, signupStrategy } from "./middleware/auth.middleware";
 
+import https from 'https';
+import fs from  'fs';
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 
@@ -61,11 +63,14 @@ router.init();
 //   rootValue,
 //   graphiql: true
 // }));
+// const content = 'Some content!'
+// import path  from 'path';
 
 const port = app.get("port");
-const server = app.listen(port, () =>
+const server = app.listen(port, () =>{
  // tslint:disable-next-line:no-console
- console.log(`Server started on port ${port}`)
+ console.log('Start server')
+}
 );
 
 export default server;

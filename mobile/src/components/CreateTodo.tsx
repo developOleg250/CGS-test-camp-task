@@ -13,6 +13,7 @@ import { styles } from '../styles/form.styles';
 import { ROUTER_KEYS } from '../data/data';
 import { useQueryClient } from 'react-query';
 import { useAddTodo } from '../hook/hook';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginSchema = Yup.object().shape({
   title: Yup.string().min(3).max(20).required('Required'),
@@ -26,9 +27,9 @@ const LoginSchema = Yup.object().shape({
 
 
 export default function CreateTodo() {
-  const navigate = useNavigate();
+  const navigator = useNavigation();
   const queryClient = useQueryClient();
-  const { mutateAsync } = useAddTodo(navigate, queryClient);
+  const { mutateAsync } = useAddTodo(navigator, queryClient);
 
   const {
     handleChange,
@@ -51,6 +52,7 @@ export default function CreateTodo() {
         'year': values.year,
       };
       await mutateAsync( data );
+      navigator.navigate(ROUTER_KEYS.TODO_LIST)
     },
   });
 
@@ -58,13 +60,13 @@ export default function CreateTodo() {
     <View
       style={styles.title}
     >
-      <Link
+      {/* <Link
         text = 'Home'
         path = {''}
         params={''}
         style={styles.link}
       >
-      </Link>
+      </Link> */}
 
       <Text style={styles.edit}>
         Create new Todo
@@ -80,7 +82,7 @@ export default function CreateTodo() {
           value={values.title}
         />
       </View>
-      <View style={styles.text}>
+      {/* <View style={styles.text}>
         <TextArea
           text='Description'
           defaultValue={values.description}
@@ -90,7 +92,7 @@ export default function CreateTodo() {
           error={errors.description}
           touched={touched.description}
         />
-      </View>
+      </View> */}
       <View style={styles.text}>
         <TextInput
           text='Year'

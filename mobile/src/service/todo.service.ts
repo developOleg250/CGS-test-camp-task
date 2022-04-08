@@ -13,6 +13,8 @@ class TodoService extends HttpService {
         apiVersion);
   }
   async getTodos(params:string) {
+    console.log(params);
+    
     const { data } = await this.get(params);
     return data;
   }

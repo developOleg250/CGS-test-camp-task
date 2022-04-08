@@ -2,6 +2,7 @@
 // It could be any fetching services, such as default fetch, call api, xhr, etc.
 
 import axios from 'axios';
+import { getToken } from '../api/AsyncStogare';
 
 class HttpService {
   baseUrl: string;
@@ -17,35 +18,37 @@ class HttpService {
   }
 
   private getFullApiUrl(id:string) {
+    console.log(`${this.baseUrl}/${this.apiVersion}/${id}`);
     return `${this.baseUrl}/${this.apiVersion}/${id}`;
   }
 
-  get(id: string) {
+  async get(id: string) {
     return this.fetchingService.get(this.getFullApiUrl(id),
-    this.populateTokenToHeaderConfig());
+        await this.populateTokenToHeaderConfig());
   }
 
-  put<T>(id: string, data:T): Promise<any> {
+  async put<T>(id: string, data:T): Promise<any> {
     return this.fetchingService.put(
-        this.getFullApiUrl(id), data, this.populateTokenToHeaderConfig());
+        this.getFullApiUrl(id), data, await this.populateTokenToHeaderConfig());
   }
 
-  post<T>(data:T, url:string = ''): Promise<any> {
+  async post<T>(data:T, url:string = ''): Promise<any> {
     return this.fetchingService.post(
-        this.getFullApiUrl(url), data, this.populateTokenToHeaderConfig());
+        this.getFullApiUrl(url), data,
+        await this.populateTokenToHeaderConfig());
   }
 
-  private populateTokenToHeaderConfig() {
+  private async populateTokenToHeaderConfig() {
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('token'),
+      'Authorization': await getToken(),
     };
     return { headers };
   }
 
-  delete(id: string) {
+  async delete(id: string) {
     return this.fetchingService.delete(
-        this.getFullApiUrl(id), this.populateTokenToHeaderConfig());
+        this.getFullApiUrl(id), await this.populateTokenToHeaderConfig());
   }
 }
 

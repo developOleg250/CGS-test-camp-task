@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import React from 'react';
 import TextInput from '../../common/TextInput';
 import Button from '../../common/Button';
@@ -10,6 +10,11 @@ import { userService } from '../../api/api';
 import { styles } from '../../styles/form.styles';
 import { THEME } from '../../styles/theme';
 import { ROUTER_KEYS } from '../../data/data';
+import { useQuery, useQueryClient } from 'react-query';
+import { useLogin } from '../../hook/hook';
+import { useNavigation } from '@react-navigation/native';
+import { getToken, setToken, test } from '../../api/AsyncStogare';
+import axios from 'axios';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().min(3).max(50).required('Required'),
@@ -18,7 +23,19 @@ const LoginSchema = Yup.object().shape({
 
 
 export default function Login() {
-  const navigate = useNavigate();
+  const navigator = useNavigation();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useLogin(navigator, queryClient);
+
+  const handleSubmitLogin = async () => {
+    const data = {
+      'email': values.email,
+      'password': values.password,
+    };
+    const res = await mutateAsync(data);
+    await setToken(res.data);
+    console.log(await getToken());
+  };
 
   const {
     handleChange,
@@ -30,32 +47,20 @@ export default function Login() {
   } = useFormik({
     validationSchema: LoginSchema,
     initialValues: { email: 'reg@gmail.com', password: '123' },
-    onSubmit: async (values) => {
-      const data = {
-        'email': values.email,
-        'password': values.password,
-      };
-      const res = await userService.login(data);
-      console.log(res.data);
-      localStorage.setItem('token', 'Bearer '+res.data.token);
-      localStorage.setItem('userId', ''+ res.data.user._id);
-      // console.log(res.data);
-      res.data.token!=undefined ? navigate(ROUTER_KEYS.TODO_LIST):
-      navigate(ROUTER_KEYS.LOGIN);
-    },
+    onSubmit: async (values) => handleSubmitLogin(),
   });
 
   return (
     <View
       style={styles.login}
     >
-      <Link
+      {/* <Link
         text = 'Home'
         path = {''}
         params={''}
         style={styles.link}
       >
-      </Link>
+      </Link> */}
 
       <Text style={styles.edit}>
         Login

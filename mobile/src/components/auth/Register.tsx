@@ -10,6 +10,10 @@ import { userService } from '../../api/api';
 import { styles } from '../../styles/form.styles';
 import { THEME } from '../../styles/theme';
 import { ROUTER_KEYS } from '../../data/data';
+import { useNavigation } from '@react-navigation/native';
+import { useQueryClient } from 'react-query';
+import { useRegister } from '../../hook/hook';
+import { getToken, setToken } from '../../api/AsyncStogare';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().min(3).max(20).required('Required'),
@@ -17,9 +21,10 @@ const LoginSchema = Yup.object().shape({
 });
 
 
-export default function Register() {
-  const navigate = useNavigate();
-
+export default function Register({navigation}) {
+  const navigator = useNavigation();
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useRegister(navigator, queryClient);
   const {
     handleChange,
     handleSubmit,
@@ -35,13 +40,14 @@ export default function Register() {
         'email': values.email,
         'password': values.password,
       };
-      const res = await userService.register(data);
-      // console.log(res.data);
-      localStorage.setItem('token', 'Bearer '+res.data.token);
-      localStorage.setItem('userId', res.data.user._id);
-      // console.log(res.data);
-      res.data.token!=undefined ? navigate(ROUTER_KEYS.TODO_LIST):
-      navigate(ROUTER_KEYS.REGISTER);
+      console.log('register tsx');
+      const res = await mutateAsync(data);
+      console.log(res);
+      if (res.data.token != undefined) {
+        await setToken(res.data);
+        navigator.navigate(ROUTER_KEYS.TODO_LIST);
+      }
+      console.log(await getToken());
     },
   });
 
@@ -49,13 +55,13 @@ export default function Register() {
     <View
       style={styles.login}
     >
-      <Link
+      {/* <Link
         text = 'Home'
         path = {''}
         params={''}
         style={styles.link}
       >
-      </Link>
+      </Link> */}
 
       <Text style={styles.edit}>
         Register

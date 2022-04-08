@@ -7,55 +7,25 @@ import EditTodo from './EditTodo';
 import TodoList from './TodoList';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import StartPage from './auth/StartPage';
+import Login from './auth/Login';
+import Register from './auth/Register';
+
 
 const Stack = createNativeStackNavigator();
 
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
-
-// function MyText() {
-//   const route = useRoute();
-
-//   return <Text>{route.params.caption}</Text>;
-// }
-
-
-function DetailsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Button
-        title="Go to Home"
-        onPress={() => navigation.navigate('Home')}
-      />
-      {/* <MyText /> */}
-    </View>
-  );
-}
-
+// initialRouteName={user ? 'HomeScreen' : 'Login'}
 const AppContent = () => {
   return (
-    <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
+    <Stack.Navigator initialRouteName={ROUTER_KEYS.LOGIN}>
+      <Stack.Screen name={ROUTER_KEYS.HOME} component={StartPage} />
+      <Stack.Screen name={ROUTER_KEYS.LOGIN} component={Login} />
+      <Stack.Screen name={ROUTER_KEYS.REGISTER} component={Register} />
+      <Stack.Screen name={ROUTER_KEYS.TODO_LIST} component={TodoList} />
+      <Stack.Screen name={ROUTER_KEYS.CREATE_TODO} component={CreateTodo} />
+      <Stack.Screen name={ROUTER_KEYS.EDIT_TODO} component={EditTodo} />
+    </Stack.Navigator>
 
-    // <View>
-    //   <Routes>
-    //     <Route path={ROUTER_KEYS.HOME} element={<TodoList/>} />
-    //     <Route path={ROUTER_KEYS.EDIT_TODO} element={< EditTodo />} />
-    //     <Route path={ROUTER_KEYS.CREATE_TODO} element={<CreateTodo />} />
-    //   </Routes>
-    // </View>
   );
 };
 

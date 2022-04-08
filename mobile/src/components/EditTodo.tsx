@@ -13,6 +13,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { styles } from '../styles/form.styles';
 import { QUERY_KEYS, ROUTER_KEYS } from '../data/data';
 import { useEditTodo } from '../hook/hook';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginSchema = Yup.object().shape({
   title: Yup.string().min(3).max(20).required('Required'),
@@ -26,12 +27,12 @@ const LoginSchema = Yup.object().shape({
 
 
 const EditTodo = () => {
-  const navigate = useNavigate();
+  const navigator = useNavigation();
   const queryClient = useQueryClient();
-  const { mutateAsync } = useEditTodo(navigate, queryClient);
+  const { mutateAsync } = useEditTodo(navigator, queryClient);
 
-  const { id } = useParams();
-
+  // const { id } = useParams();
+ const id = '624fd62cf4433e2d47034353';
   const { isLoading, data }=
   useQuery(QUERY_KEYS.POST_ID(id), () => todoService.getTodosById(id+''));
   const getData = () => data || tempData;
@@ -58,9 +59,8 @@ const EditTodo = () => {
         'description': values.description,
         'year': values.year,
       };
-      // await todoService.updateTodo(values._id, data);
-      // navigate(ROUTER_KEYS.TODO_LIST);
       await mutateAsync({ id: values._id, data });
+      navigator.navigate(ROUTER_KEYS.TODO_LIST);
     },
   });
 
@@ -68,13 +68,13 @@ const EditTodo = () => {
     <View
       style={styles.title}
     >
-      <Link
+      {/* <Link
         text = 'Home'
         path = {''}
         params={''}
         style={styles.link}
       >
-      </Link>
+      </Link> */}
 
       <Text style={styles.edit}>
         Edit Todo
@@ -90,7 +90,7 @@ const EditTodo = () => {
           value={values.title}
         />
       </View>
-      <View style={styles.text}>
+      {/* <View style={styles.text}>
         <TextArea
           text='Description'
           defaultValue={values.description}
@@ -100,7 +100,7 @@ const EditTodo = () => {
           error={errors.description}
           touched={touched.description}
         />
-      </View>
+      </View> */}
       <View style={styles.text}>
         <TextInput
           text='Year'
