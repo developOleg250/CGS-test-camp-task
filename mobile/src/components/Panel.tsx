@@ -15,10 +15,7 @@ interface IPanel{
 }
 
 const Panel:React.FC<IPanel> = ({ _id, handleUpdate }) => {
-  console.log(_id);
-  
   const navigator = useNavigation();
-  // const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutateAsync } = useDeleteTodo(navigator, queryClient);
   return (
@@ -30,13 +27,6 @@ const Panel:React.FC<IPanel> = ({ _id, handleUpdate }) => {
           marginHorizontal: THEME.Spacings.sp20,
           alignItems: 'center',
         }}>
-        {/* <Link
-          text = 'Edit'
-          path = {'/editTodo'}
-          params={_id}
-          style={styles.link}
-        >
-        </Link> */}
         <Button
           onPress={async () => {
             navigator.navigate(ROUTER_KEYS.EDIT_TODO);

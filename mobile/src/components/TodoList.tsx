@@ -57,24 +57,14 @@ const TodoList = ( {navigation}) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, paddingBottom: THEME.Spacings.sp30,
-        paddingTop: THEME.Spacings.sp20,
+      <View style={{ flex: 1,
+        // paddingBottom: THEME.Spacings.sp30,
+        // paddingTop: THEME.Spacings.sp20,
         justifyContent: 'center',
-        alignItems: 'center' }}>
-        <View style={{ paddingBottom: THEME.Spacings.sp30 }}>
-          {/* <Link
-            text = 'Back'
-            path = {''}
-            params={''}
-            style={styles.link2}
-          >
-          </Link> */}
-        </View>
-        {/* <Link
-          text='Create Todo'
-          path = {'/createTodo'}
-          params={''} style={styles.link2}>
-        </Link> */}
+        alignItems: 'center',
+        marginTop: THEME.Spacings.sp20,
+        marginBottom: THEME.Spacings.sp10,
+      }}>
         <Button
           label='Create Todo'
           onPress={() => navigation.navigate(ROUTER_KEYS.CREATE_TODO)}
@@ -84,11 +74,13 @@ const TodoList = ( {navigation}) => {
         handleChangeParam={handleChangeParam}
       >
       </Filters>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={ (item) => item._id}
-      />
+      <View style={{ margin: THEME.Spacings.sp40 }}>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={ (item) => item._id}
+        />
+      </View>
       <View style={{ flex: 1, alignItems: 'center' }}>
         <Button label='Load new todo'
           onPress={() => handleChangePagination()}
