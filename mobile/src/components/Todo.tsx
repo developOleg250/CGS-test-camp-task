@@ -1,4 +1,3 @@
-// import CheckBox from '@react-native-community/checkbox';
 import React from 'react';
 
 import { StyleSheet, Text, View } from 'react-native';
@@ -48,7 +47,7 @@ const Todo:React.FC<ITodo> = ({
               paddingLeft: THEME.Spacings.sp10,
               backgroundColor: THEME.Colors.green1,
             }}>
-              <Text>{description} = {userId}</Text>
+              <Text>{description}</Text>
             </View>
             {/* checkboxes */}
             <View style={{ flex: 1,

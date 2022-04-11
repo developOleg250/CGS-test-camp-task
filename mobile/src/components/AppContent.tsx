@@ -14,10 +14,9 @@ import Register from './auth/Register';
 
 const Stack = createNativeStackNavigator();
 
-// initialRouteName={user ? 'HomeScreen' : 'Login'}
 const AppContent = () => {
   return (
-    <Stack.Navigator initialRouteName={ROUTER_KEYS.LOGIN}>
+    <Stack.Navigator initialRouteName={ROUTER_KEYS.HOME}>
       <Stack.Screen name={ROUTER_KEYS.HOME} component={StartPage} />
       <Stack.Screen name={ROUTER_KEYS.LOGIN} component={Login} />
       <Stack.Screen name={ROUTER_KEYS.REGISTER} component={Register} />

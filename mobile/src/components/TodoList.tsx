@@ -23,12 +23,10 @@ interface TodoSet {
 const TodoList = ( {navigation}) => {
   const res = getToken();
   const [test, setTest] = useState<string>('test');
-  // after useQuery get error!
   const [valueParam, setChangeParam] = useState<string>('');
   const [valuePagination, setChangePagination] = useState<number>(2);
 
   const handleChangePagination = async () => {
-    // await for update ans set  state
     setChangePagination(valuePagination+2);
   };
 
@@ -64,23 +62,25 @@ const TodoList = ( {navigation}) => {
 
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1,
-        // paddingBottom: THEME.Spacings.sp30,
-        // paddingTop: THEME.Spacings.sp20,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: THEME.Spacings.sp20,
         marginBottom: THEME.Spacings.sp10,
       }}>
-        <Button
-          label='Create Todo'
-          onPress={() => navigation.navigate(ROUTER_KEYS.CREATE_TODO)}
-        />
+        <View style={{ margin: THEME.Spacings.sp5 }}>
+          <Button
+            label='Create Todo'
+            onPress={() => navigation.navigate(ROUTER_KEYS.CREATE_TODO)}
+          />
+        </View>
       </View>
-      <Filters
-        handleChangeParam={handleChangeParam}
-      >
-      </Filters>
-      <View style={{ margin: THEME.Spacings.sp40 }}>
+      <View style={{ marginTop: THEME.Spacings.sp5 }}>
+        <Filters
+          handleChangeParam={handleChangeParam}
+        >
+        </Filters>
+      </View>
+      <View style={{ margin: THEME.Spacings.sp30 }}>
         <FlatList
           data={data}
           renderItem={renderItem}

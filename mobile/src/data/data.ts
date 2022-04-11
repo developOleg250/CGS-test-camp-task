@@ -3,12 +3,12 @@ export const QUERY_KEYS = {
   POST_ID: (id: string) => ['posts', id],
 };
 export const ROUTER_KEYS = {
-  HOME: '/',
-  CREATE_TODO: '/createTodo',
-  EDIT_TODO: '/editTodo', // '/editTodo/:id'
-  LOGIN: '/login',
-  REGISTER: '/register',
-  TODO_LIST: '/todoList',
+  HOME: 'home',
+  CREATE_TODO: 'createTodo',
+  EDIT_TODO: 'editTodo',
+  LOGIN: 'login',
+  REGISTER: 'register',
+  TODO_LIST: 'todoList',
 };
 
 export const SERVER_URL = 'http://192.168.88.250:5000';

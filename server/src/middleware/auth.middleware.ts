@@ -19,13 +19,8 @@ export const loginStrategy = new LocalStrategy.Strategy(
   },
   async (email, password, done) => {
     try {
-      console.log('s1111');
-      //find user exist in base=>true
       const user = await User.findOne({ email });
-      // console.log(user);
       const hashPasswordText= hashPassword(password, UPDATE );
-      // console.log(hashPasswordText);
-      
       if (user) {
         if (email === user.email && hashPasswordText === user.password  )  {
           return done(null, user); //redirect to login user
@@ -57,7 +52,6 @@ export const passportLoginAuthenticate = (req, res, next) => {
 
     //if user exist and email password are good => token
     if (user) {
-      // console.log('loginStrategy='+user._id );
       const token = generateAccessToken(user._id);
       return res.send({token, user});
     }
@@ -72,7 +66,6 @@ export const signupStrategy = new LocalStrategy.Strategy(
     try {
       //find user exist in base
       const user = await User.findOne({ email });
-      // console.log(user);
       if (!user) {
         return done(null, true); //redirect to create user
       }
@@ -102,7 +95,6 @@ export const passportSignUpAuthenticate =(req, res, next) => {
       try {
         const userCreate = await User.create(req.body);
         const token = generateAccessToken(userCreate._id)
-        // console.log('signUPStrategy='+userCreate._id );
         return res.send({token, user: userCreate });
       } catch (error) {
         return res.send( { message: 'errror base' })
@@ -115,23 +107,13 @@ export const passportSignUpAuthenticate =(req, res, next) => {
 
 export const isValidToken = () => 
   async (req: Request, res: Response, next: NextFunction) => {
-    // console.log('1111');
-    
   try{
-    // console.log(req.headers); 
-
   const token  = req.headers?.authorization?.split(' ')[1];
-  // console.log('token'+token);
   if (!token) {
     return res.status(403).json({message: 'token not  found'})
   }
   const decodedData = jwt.verify(token, SECRET);
-  // console.log(decodedData);
-  
   req.user = decodedData;
-  // console.log(decodedData);
-  
-  // return res.status(200).json({decode: decodedData }) 
   return next();
   }
   catch(e:any) {

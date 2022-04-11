@@ -6,7 +6,6 @@ import AppContent from './src/components/AppContent';
 
 
 import { NavigationContainer, useRoute } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const queryClient = new QueryClient();
 
